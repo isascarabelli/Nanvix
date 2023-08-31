@@ -121,7 +121,27 @@
 	/**@}*/
 
 #ifndef _ASM_FILE_
+	/**
+	 * @brief Process buffer. Utilizado para a instrução get_process_info()
+	 */
+	struct process_buf{
+    		pid_t pid; // process ID 
+    		unsigned state; //current state
+    		int priority; //process priority
+    		unsigned utime; //user CPU time 
+    		unsigned ktime; //kernel CPU time 
+	};
 
+	/* States: 
+	DEAD (0)
+	ZOMBIE (1)
+	RUNNING (2)
+	READY (3)
+	WAITING (4)
+	SLEEPING (5)
+	STOPPED (6)
+	*/
+		
 	/**
 	 * @brief Process.
 	 */
@@ -285,6 +305,9 @@
 	EXTERN struct process *last_proc;
 	EXTERN pid_t next_pid;
 	EXTERN unsigned nprocs;
+
+	/* Assinatura da função de kernel do_get_process_info() */
+	EXTERN int do_get_process_info(pid_t pid, struct process_buf *buf);
 
 #endif /* _ASM_FILE */
 

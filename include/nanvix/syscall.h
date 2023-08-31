@@ -31,7 +31,7 @@
 	#include <utime.h>
 
 	/* Number of system calls. */
-	#define NR_SYSCALLS 51
+	#define NR_SYSCALLS 52
 
 	/* System call numbers. */
 	#define NR_alarm     0
@@ -85,6 +85,7 @@
  	#define NR_semget   48
  	#define NR_semctl   49
  	#define NR_semop    50
+	#define NR_do_get_process_info 51
 
 #ifndef _ASM_FILE_
 
@@ -263,6 +264,11 @@
 	 * Get system ticks since initialization
 	 */
 	EXTERN int sys_gticks(void);
+
+	/*
+	 * Chamada de kernel que retorna para um buffer de usuário as informações de um processo.
+	 */
+	EXTERN int sys_get_process_info( pid_t pid, struct process_buf *buf );
 
 #endif /* _ASM_FILE_ */
 
