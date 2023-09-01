@@ -146,7 +146,7 @@ sleep:
 	$(CC) $(CFLAGS) $(LDFLAGS) -D TESTE sleep/*.c -o $(UBINDIR)/sleep $(LIBDIR)/libc.a
 
 # Builds getp.
-sleep: 
+getp: 
 	$(CC) $(CFLAGS) $(LDFLAGS) -D TESTE getp/*.c -o $(UBINDIR)/getp $(LIBDIR)/libc.a
 
 
