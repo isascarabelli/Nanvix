@@ -268,7 +268,7 @@
 	/*
 	 * Chamada de kernel que retorna para um buffer de usuário as informações de um processo.
 	 */
-	EXTERN int sys_get_process_info( pid_t pid, struct process_buf *buf );
+	EXTERN void sys_get_process_info( pid_t pid, struct process_buf *buf );
 
 #endif /* _ASM_FILE_ */
 
