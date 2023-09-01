@@ -307,7 +307,7 @@
 	EXTERN unsigned nprocs;
 
 	/* Assinatura da função de kernel do_get_process_info() */
-	EXTERN int do_get_process_info(pid_t pid, struct process_buf *buf);
+	EXTERN void do_get_process_info(pid_t pid, struct process_buf *buf);
 
 #endif /* _ASM_FILE */
 
