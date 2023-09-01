@@ -73,8 +73,8 @@ PUBLIC void (*syscalls_table[NR_SYSCALLS])(void)  = {
 	(void (*)(void))&sys_shutdown,
 	(void (*)(void))&sys_ps,
 	(void (*)(void))&sys_gticks,
-	(void (*)(void))&sys_get_process_info,
-    NULL,
-    NULL,
-    NULL
+	 NULL,
+         NULL,
+         NULL,
+        (void (*)(void))&sys_get_process_info,
 };
