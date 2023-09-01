@@ -125,3 +125,19 @@ PUBLIC void pm_init(void)
 
 	enable_interrupts();
 }
+
+//pid_t --> typedef de signed
+PUBLIC void do_get_process_info(pid_t pid, struct process_buf *buf){
+	struct process *proc;
+	int aux = 1; //salva a posição de proctable que aquele processo ocupa
+
+	//Loop na tabela de processos
+	for (proc = FIRST_PROC; proc <= LAST_PROC; proc++){
+		//Checa se aquele processo possui o pid requerido
+		if(proc->pid == pid){
+			buf = &proctab[aux]; //buffer agora passa a apontar para o endereço do processo escolhido que foi selecionado na tabela de processos
+		}
+		
+		aux++;
+	}
+}
