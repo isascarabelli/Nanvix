@@ -135,7 +135,11 @@ PUBLIC void do_get_process_info(pid_t pid, struct process_buf *buf){
 	for (proc = FIRST_PROC; proc <= LAST_PROC; proc++){
 		//Checa se aquele processo possui o pid requerido
 		if(proc->pid == pid){
-			buf = &proctab[aux]; //buffer agora passa a apontar para o endereço do processo escolhido que foi selecionado na tabela de processos
+			buf->pid = proctab[aux]->pid;
+			buf->state = proctab[aux]->state;
+			buf->priority = proctab[aux]->priority;
+			buf->utime = proctab[aux]->utime;
+			buf->ktime = proctab[aux]->ktime;
 		}
 		
 		aux++;
