@@ -13,7 +13,7 @@ void prepareValue(int value, char* s, int padding)
 {
 	int i,len,size;
 
-	itoaps(value, s);
+	itoa (value, s, 10);
 	len = padding - kstrlen(s);
 
 	size = kstrlen(s);
@@ -27,7 +27,7 @@ PUBLIC void  sys_get_process_info( pid_t pid, struct process_buf *buf ){
 	do_get_process_info( pid, buf );
 
 	//Parâmetros abaixo usados apenas para formatação na hora de imprimir para o usuário
-	char pid     [26];
+	char p[26];
 	char priority[26];
 	char utime   [26];
 	char ktime   [26];
@@ -47,19 +47,18 @@ PUBLIC void  sys_get_process_info( pid_t pid, struct process_buf *buf ){
 		    "   UTIME   KTIME     STATUS");
 
 		/* Pid */
-		prepareValue(buf->pid, pid, 6);
+		prepareValue(buf->pid, p, 6);
 
 		/* Priority */
-		prepareValue(p->priority, priority, 11);
+		prepareValue(buf->priority, priority, 11);
 
 		/* Utime */
-		prepareValue(p->utime, utime, 8);
+		prepareValue(buf->utime, utime, 8);
 
 		/* Ktime */
-		prepareValue(p->ktime, ktime, 10);
+		prepareValue(buf->ktime, ktime, 10);
 
-		kprintf("%s%s%s%s%s%s%s%s",name, pid,
+		kprintf("%s%s%s%s%s%s%s%s", pid,
 			priority, utime, ktime, states[(int)buf->state] );
-	}
 }
 
