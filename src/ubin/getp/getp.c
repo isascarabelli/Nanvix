@@ -23,6 +23,7 @@
 #include <string.h>
 #include <signal.h>
 #include <nanvix/pm.h>
+#include <unistd.h>
 
 /* Software versioning. */
 #define VERSION_MAJOR 1 /* Major version. */
@@ -34,10 +35,8 @@
 /*
  * Program arguments.
  */
-static struct{
-	struct process_buf *buf; //buffer with the informations of the process
-	pid_t pid; /* ID of process. */
-} args = { 0, 0 };
+struct process_buf *buf; //buffer with the informations of the process
+pid_t pid; /* ID of process. */
 
 /*
  * Prints program version and exits.
@@ -88,12 +87,12 @@ static void getargs(int argc, char *const argv[])
 			version();
 		}
 		else {
-			args.pid = atoi(arg);
+			pid = atoi(arg);
 		}
 	}
 
 	/* Bad signal number. */
-	if (args.pid < 0)
+	if (pid < 0)
 	{
 		fprintf(stderr, "getp: unknown signal number\n");
 		exit(EXIT_FAILURE);
@@ -104,7 +103,7 @@ int main(int argc, char *const argv[])
 {
 	getargs(argc, argv);
 
-	if (getp(args.pid, &args.buf) > 0){
+	if (getp(pid, buf) > 0){
         return 0;
     } else {
         return -1;
