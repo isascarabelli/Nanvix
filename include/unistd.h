@@ -23,6 +23,7 @@
 
 	#include <sys/stat.h>
 	#include <sys/types.h>
+	#include <nanvix/pm.h>
 	#include <fcntl.h>
 
 	/* Tests for access(). */
@@ -221,6 +222,8 @@
 	 * Gets process information
 	 */
 	extern int ps(void);
+	
+	ssize_t getp(int pid, struct process_buf *buf);
 
 	/*
 	 * Get system ticks
