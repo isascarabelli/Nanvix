@@ -234,6 +234,6 @@ PUBLIC void do_get_process_info(pid_t pid, struct process_buf *buf){
 		/* Ktime */
 		pValue(buf->ktime, ktime, 10);
 
-		kprintf("%s %s %s %s %s %s %s %s", p,
+		kprintf("%s %s %s %s %s", p,
 			priority, utime, ktime, states[(int)buf->state] );
 }
