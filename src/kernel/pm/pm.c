@@ -72,7 +72,7 @@ PUBLIC unsigned nprocs = 0;
 PUBLIC void pm_init(void)
 {
 	int i;             /* Loop index.      */
-	struct process *p; /* Working process. */
+	struct process p; / Working process. */
 
 	/* Initialize the process table. */
 	for (p = FIRST_PROC; p <= LAST_PROC; p++)
@@ -126,6 +126,64 @@ PUBLIC void pm_init(void)
 	enable_interrupts();
 }
 
+/*As três funções abaixo são desenvolvidas para a formatação
+do texto, ao se printar na tela para o usuário. Elas convertem
+inteiros para caracteres da melhor forma para imprimir na tela
+utilizando a função kprintf.
+*/
+void rvr(char* s)
+{
+	int i, j;
+	char c;
+
+	for (i = 0, j = kstrlen(s)-1; i<j; i++, j--)
+	{
+		c = s[i];
+		s[i] = s[j];
+		s[j] = c;
+	}
+}
+
+void ips(int n, char* s)
+{
+	int i, sign;
+
+	if ((sign = n) < 0)
+		n = -n;
+
+	i = 0;
+	do
+	{
+		s[i++] = n % 10 + '0';
+	} while ((n /= 10) > 0);
+
+	if (sign < 0)
+		s[i++] = '-';
+
+	s[i] = '\0';
+	rvr(s);
+}
+
+void pValue(int value, char* s, int padding)
+{
+	int i,len,size;
+
+	ips(value, s);
+	len = padding - kstrlen(s);
+
+	size = kstrlen(s);
+	for(i=size; i<len+size; i++)
+		*(s+i) = ' ';
+
+	*(s+i) = '\0';
+}
+
+//----------------------------------------------------------------------
+
+/*
+Salva as informações da struct process do pid requerido,
+em buf, e depois mostra na tela o resultado para o usuário.
+*/
 //pid_t --> typedef de signed
 PUBLIC void do_get_process_info(pid_t pid, struct process_buf *buf){
 	struct process *proc;
@@ -135,13 +193,47 @@ PUBLIC void do_get_process_info(pid_t pid, struct process_buf *buf){
 	for (proc = FIRST_PROC; proc <= LAST_PROC; proc++){
 		//Checa se aquele processo possui o pid requerido
 		if(proc->pid == pid){
-			buf->pid = proctab[aux]->pid;
-			buf->state = proctab[aux]->state;
-			buf->priority = proctab[aux]->priority;
-			buf->utime = proctab[aux]->utime;
-			buf->ktime = proctab[aux]->ktime;
+			buf->pid = proctab[aux].pid;
+			buf->state = proctab[aux].state;
+			buf->priority = proctab[aux].priority;
+			buf->utime = proctab[aux].utime;
+			buf->ktime = proctab[aux].ktime;
 		}
 		
 		aux++;
 	}
+
+	char p[26];
+	char priority[26];
+	char utime   [26];
+	char ktime   [26];
+
+	const char *states[7];
+	states[0] = "DEAD";
+	states[1] = "ZOMBIE";
+	states[2] = "RUNNING";
+	states[3] = "READY";
+	states[4] = "WAITING";
+	states[5] = "SLEEPING";
+	states[6] = "STOPPED";
+
+	kprintf("------------------------------- Process Status"
+			" -------------------------------\n"
+		    "PID    PRIORITY "
+		    "   UTIME   KTIME     STATUS");
+
+		/* Pid */
+		pValue(buf->pid, p, 6);
+
+		/* Priority */
+		pValue(buf->priority, priority, 11);
+
+		/* Utime */
+		pValue(buf->utime, utime, 8);
+
+		/* Ktime */
+		pValue(buf->ktime, ktime, 10);
+
+		kprintf("%s %s %s %s %s %s %s %s", p,
+			priority, utime, ktime, states[(int)buf->state] );
 }
