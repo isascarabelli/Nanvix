@@ -72,7 +72,7 @@ PUBLIC unsigned nprocs = 0;
 PUBLIC void pm_init(void)
 {
 	int i;             /* Loop index.      */
-	struct process p; /* Working process. */
+	struct process *p; /* Working process. */
 
 	/* Initialize the process table. */
 	for (p = FIRST_PROC; p <= LAST_PROC; p++)
