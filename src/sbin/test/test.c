@@ -229,6 +229,10 @@ static void work_io(void)
 static int sched_test0(void)
 {
 	pid_t pid;
+	struct tms timing;  /* Timing information. */
+	clock_t t0, t1;     /* Elapsed times.      */
+
+	t0 = times(&timing);
 
 	pid = fork();
 
@@ -244,6 +248,11 @@ static int sched_test0(void)
 	}
 
 	wait(NULL);
+	
+	t1 = times(&timing);
+
+	if (flags & VERBOSE)
+		printf("  Elapsed: %d\n", t1 - t0);
 
 	return (0);
 }
@@ -259,6 +268,10 @@ static int sched_test0(void)
 static int sched_test1(void)
 {
 	pid_t pid;
+	struct tms timing;  /* Timing information. */
+	clock_t t0, t1;     /* Elapsed times.      */
+
+	t0 = times(&timing);
 
 	pid = fork();
 
@@ -282,6 +295,11 @@ static int sched_test1(void)
 	}
 
 	wait(NULL);
+
+	t1 = times(&timing);
+
+	if (flags & VERBOSE)
+		printf("  Elapsed: %d\n", t1 - t0);
 
 	return (0);
 }
