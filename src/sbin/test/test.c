@@ -297,6 +297,11 @@ static int sched_test2(void)
 {
 	pid_t pid[4];
 
+	clock_t t0, t1;
+   	struct tms timing;
+    
+  	t0 = times(&timing);
+
 	for (int i = 0; i < 4; i++)
 	{
 		pid[i] = fork();
@@ -336,6 +341,11 @@ static int sched_test2(void)
 		}
 	}
 
+	t1 = times(&timing);
+
+	if (flags & VERBOSE)
+		printf("  Elapsed: %d\n", t1 - t0);
+
 	return (0);
 }
 
@@ -351,6 +361,11 @@ static int sched_test3(void)
 	pid_t child;
 	pid_t father;
 
+	clock_t t0, t1;
+   	struct tms timing;
+    
+  	t0 = times(&timing);
+
 	father = getpid();
 
 	fork();
@@ -365,6 +380,11 @@ static int sched_test3(void)
 	/* Die. */
 	if (getpid() != father)
 		_exit(EXIT_SUCCESS);
+
+	t1 = times(&timing);
+
+   	if (flags & VERBOSE)
+		printf("  Elapsed: %d\n", t1 - t0);
 
 	return (0);
 }
