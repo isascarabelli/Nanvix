@@ -26,7 +26,7 @@
 # Função usada para criar vários processos, forçando o sistema estressar o escalonador,
 # a fim de verificar como o escalonador lida com uma carga elevada de processos.
 # Retornando 0, caso for aprovado no teste, ou algo diferente de 0
-caso contrário e o seu tempo de execução;
+# caso contrário e o seu tempo de execução;
 ```
 
 ## 2. Teste no escalonador Round Robin
@@ -47,7 +47,3 @@ imagem dos testes
 imagem dos testes
 ```
 
-
-```bash
-imagem dos testes
-```
