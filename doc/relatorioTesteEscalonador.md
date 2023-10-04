@@ -5,24 +5,23 @@
 
 ```bash
 # sched_test0
-# Função usada para testar a chamada de sistema wait(), gerando dois processos, um processo pai e um filho.
-# Retornando 0, caso o teste terminei, e o seu tempo de execução;
-# 
+# Função usada para testar a chamada de sistema wait(), gerando dois processos,
+# um processo pai e um filho. Retornando 0, caso o teste terminei, e o seu tempo de execução;
 #
 # sched_test1
 # Função usada para o teste do problema de inversão de prioridade,
-# ajustando as prioridades e executando trabalho intensivo da CPU e o IO em processos diferentes, a fim de verificar
-# como o escalanador lida com as prioridades dinâmicas.
+# ajustando as prioridades e executando trabalho intensivo da CPU e o IO em processos diferentes,
+# a fim de verificar como o escalanador lida com as prioridades dinâmicas.
 # Retornando 0, caso o teste terminei, e o seu tempo de execução;
 #
 # sched_test2
 # Função usada para criar vários processos que estressam o escalonador,
-# alguns executando e outros em pausa, a fim de verificar como o escalonador lida com uma carga variada de processos.
-# Retornando 0, caso o teste terminei, e o seu tempo de execução;
+# alguns executando e outros em pausa, a fim de verificar como o escalonador lida
+# com uma carga variada de processos. Retornando 0, caso o teste terminei, e o seu tempo de execução;
 #
 # sched_test3
-# Função usada para criar vários processos, forçando o sistema estressar o escalonador, a fim de verificar como
-# o escalonador lida com uma carga elevada de processos.
+# Função usada para criar vários processos, forçando o sistema estressar o escalonador,
+# a fim de verificar como o escalonador lida com uma carga elevada de processos.
 # Retornando 0, caso o teste terminei, e o seu tempo de execução;
 ```
 
