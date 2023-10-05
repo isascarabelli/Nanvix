@@ -677,13 +677,20 @@ int main(int argc, char **argv)
 		/* Scheduling test. */
 		else if (!strcmp(argv[i], "sched"))
 		{
-			printf("Scheduling Tests\n");
-			printf("  waiting for child  [%s]\n",
-				(!sched_test0()) ? "PASSED" : "FAILED");
-			printf("  dynamic priorities [%s]\n",
-				(!sched_test1()) ? "PASSED" : "FAILED");
-			printf("  scheduler stress   [%s]\n",
-				(!sched_test2() && !sched_test3()) ? "PASSED" : "FAILED");
+			 printf("Scheduling Tests\n");
+
+          	  	 printf("  waiting for child  ");
+            		 sched0Result = sched_test0();
+            		 printf("\n test waiting for child  [%s]", (!sched0Result) ? "PASSED" : "FAILED");
+
+            		 printf("  dynamic priorities ");
+	             	 sched1Result = sched_test1();
+	             	 printf("\n test dynamic priorities [%s]", (!sched1Result) ? "PASSED" : "FAILED");
+	 
+		         printf("  scheduler stress   ");
+	       		 sched2Result = sched_test2();
+	            	 sched3Result = sched_test3();  
+	            	 printf("\n test's scheduler stress [%s]", (!sched2Result && !sched3Result) ? "PASSED" : "FAILED");
 		}
 
 		/* IPC test. */
