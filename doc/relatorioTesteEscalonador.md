@@ -32,12 +32,16 @@
 ## 2. Teste no escalonador Round Robin
 
 ```bash
-imagem dos testes
+## Tempo de Execução: 
+# prints dos testes
+imagens dos testes
 ```
 
 ## 3. Teste no escalonador Fila de Prioridades
 
 ```bash
+## Tempo de Execução:
+# prints dos testes
 imagem dos testes
 ```
 
