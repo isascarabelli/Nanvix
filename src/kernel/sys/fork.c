@@ -33,9 +33,9 @@ PUBLIC pid_t sys_fork(void)
 {
 	int i;                /* Loop index.     */
 	int err;              /* Error?          */
-	struct process *proc; /* Process.        */
-	struct region *reg;   /* Memory region.  */
-	struct pregion *preg; /* Process region. */
+	struct process proc; / Process.        */
+	struct region reg;   / Memory region.  */
+	struct pregion preg; / Process region. */
 
 #if (EDUCATIONAL_KERNEL == 0)
 
@@ -151,6 +151,7 @@ found:
 	proc->cktime = 0;
 	proc->priority = curr_proc->priority;
 	proc->nice = curr_proc->nice;
+	proc->epriority = curr_proc->priority + curr_proc->nice;
 	proc->alarm = 0;
 	proc->next = NULL;
 	proc->chain = NULL;
