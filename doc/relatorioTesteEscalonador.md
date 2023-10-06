@@ -3,6 +3,8 @@
 
 ## 1. Funções usadas para os testes
 
+>Funções implementadas em src/sbin/test/tes.c
+
 ```bash
 # sched_test0
 # Função usada para testar a chamada de sistema wait(), gerando dois processos,
@@ -47,9 +49,7 @@ imagem dos testes
 
 ## 4. Comparação entre os escalonadores
 
-```bash
-imagem dos testes
-```
+> Levando em conta os testes feitos, ......
 
 ## 5. Conclusões 
 
