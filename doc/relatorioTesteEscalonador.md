@@ -3,7 +3,7 @@
 
 ## 1. Funções usadas para os testes
 
->Funções implementadas em src/sbin/test/tes.c
+>Funções implementadas em src/sbin/test/test.c
 
 ```bash
 # sched_test0
