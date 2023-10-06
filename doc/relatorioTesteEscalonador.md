@@ -53,10 +53,5 @@ imagem dos testes
 
 ## 5. Conclusões 
 
-```bash
-#
-#
-#
-#
-```
+> Levando em conta os testes feitos, ......
 
