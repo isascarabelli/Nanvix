@@ -47,3 +47,12 @@ imagem dos testes
 imagem dos testes
 ```
 
+## 5. Conclusões 
+
+```bash
+#
+#
+#
+#
+```
+
