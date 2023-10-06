@@ -252,7 +252,7 @@ static int sched_test0(void)
 	t1 = times(&timing);
 
 	if (flags & VERBOSE)
-		printf("  Elapsed: %d\n", t1 - t0);
+		printf("  Elapsed of the test waiting for child: %d\n", t1 - t0);
 
 	return (0);
 }
@@ -299,7 +299,7 @@ static int sched_test1(void)
 	t1 = times(&timing);
 
 	if (flags & VERBOSE)
-		printf("  Elapsed: %d\n", t1 - t0);
+		printf("  Elapsed of the test dynamic priorities: %d\n", t1 - t0);
 
 	return (0);
 }
@@ -362,7 +362,7 @@ static int sched_test2(void)
 	t1 = times(&timing);
 
 	if (flags & VERBOSE)
-		printf("  Elapsed: %d\n", t1 - t0);
+		printf("  Elapsed of the test scheduler stress 0: %d\n", t1 - t0);
 
 	return (0);
 }
@@ -402,7 +402,7 @@ static int sched_test3(void)
 	t1 = times(&timing);
 
    	if (flags & VERBOSE)
-		printf("  Elapsed: %d\n", t1 - t0);
+		printf("  Elapsed of the test scheduler stress 1: %d\n", t1 - t0);
 
 	return (0);
 }
@@ -679,18 +679,13 @@ int main(int argc, char **argv)
 		{
 			 printf("Scheduling Tests\n");
 
-          	  	 printf("  waiting for child  ");
-            		 sched0Result = sched_test0();
-            		 printf("\n test waiting for child  [%s]", (!sched0Result) ? "PASSED" : "FAILED");
-
-            		 printf("  dynamic priorities ");
-	             	 sched1Result = sched_test1();
-	             	 printf("\n test dynamic priorities [%s]", (!sched1Result) ? "PASSED" : "FAILED");
-	 
-		         printf("  scheduler stress   ");
-	       		 sched2Result = sched_test2();
-	            	 sched3Result = sched_test3();  
-	            	 printf("\n test's scheduler stress [%s]", (!sched2Result && !sched3Result) ? "PASSED" : "FAILED");
+          	  	 printf("Scheduling Tests\n");
+			 printf("  waiting for child  [%s]\n",
+				(!sched_test0()) ? "PASSED" : "FAILED");
+			 printf("  dynamic priorities [%s]\n",
+				(!sched_test1()) ? "PASSED" : "FAILED");
+			 printf("  scheduler stress   [%s]\n",
+				(!sched_test2() && !sched_test3()) ? "PASSED" : "FAILED");
 		}
 
 		/* IPC test. */
