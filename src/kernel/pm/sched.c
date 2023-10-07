@@ -100,7 +100,7 @@ PUBLIC void yield(void)
 		// Process with higher
 		//waiting time found.
 		 
-/*		if (p->counter > next->counter)
+		if (p->counter > next->counter)
 		{
 			next->counter++;
 			next = p;
@@ -110,7 +110,7 @@ PUBLIC void yield(void)
 		 //Increment waiting
 		 //time of process.
 		 
-/*		else
+		else
 			p->counter++;
 	}
 
