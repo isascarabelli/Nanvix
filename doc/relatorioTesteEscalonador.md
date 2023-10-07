@@ -3,7 +3,7 @@
 
 ## 1. Funções usadas para os testes
 
->Funções implementadas em src/sbin/test/test.c
+Funções implementadas em src/sbin/test/test.c
 
 > #sched_test0
 Função usada para testar a chamada de sistema wait(), gerando dois processos,
@@ -31,7 +31,7 @@ caso contrário e o seu tempo de execução;
 
 ## 2. Algoritmo fila de prioridades
 
-> Implementação de duas formas para representação da fila de prioridades.
+Implementação de duas formas para representação da fila de prioridades.
 
 >Para os dois códigos utilizamos como prioridade efetiva a soma da prioridade aplicada pelo próprio sistema operacional através
 do atributo 'priority' no bloco de controle de processo (prioridade base estática), mais a prioridade escolhida pelo usuário
@@ -54,32 +54,22 @@ Dessa forma, no próximo quantum aquela prioridade será maior que a prioridade 
 
 ## 3. Teste no escalonador Round Robin
 
-```bash
-## Tempo de Execução: 
-# prints dos testes
-imagens dos testes
-```
-
-## 4. Teste no escalonador Fila de Prioridades
-
->Prints dos testes:
-
 >ROUND-ROBIN natural do Nanvix
 
 ![WhatsApp Image 2023-10-07 at 11 39 07](https://github.com/isascarabelli/Nanvix/assets/73960096/6869f8fb-7058-4118-be27-5d5ab5c3e1b1)
 
 ![WhatsApp Image 2023-10-07 at 11 51 30](https://github.com/isascarabelli/Nanvix/assets/73960096/5ccc87a0-d86b-460b-bac9-7efc56b420c3)
 
+## 4. Teste no escalonador Fila de Prioridades
 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 >Fila de prioridades 1 - padrão
 
 ![WhatsApp Image 2023-10-07 at 11 47 11](https://github.com/isascarabelli/Nanvix/assets/73960096/6702e378-7f74-4430-852b-96f0d515095f)
 
 ![WhatsApp Image 2023-10-07 at 11 32 45](https://github.com/isascarabelli/Nanvix/assets/73960096/635f0220-91b0-4a7c-af4f-2612bbcdb07f)
 
-
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
 >Fila de prioridades 2
 
 ![WhatsApp Image 2023-10-07 at 11 37 17](https://github.com/isascarabelli/Nanvix/assets/73960096/502336bd-7d56-4ea0-89f2-7b0ba8ab82eb)
