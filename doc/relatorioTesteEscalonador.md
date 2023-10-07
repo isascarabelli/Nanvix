@@ -35,13 +35,24 @@
 > Implementação de duas formas para representação da fila de prioridades.
 
 ```bash
-Para os dois códigos utilizamos como prioridade efetiva a soma da prioridade aplicada pelo próprio sistema operacional através do atributo priority no bloco de controle de processo (prioridade base estática), mais a prioridade escolhida de usuário (atributo 'nice' do bloco de controle de processo também, alterada através da chamada de sistema nice()), junto com o tempo de espera daquele processo na fila (prioridade dinâmica). Para a prioridade dinâmica, incrementamos o atributo 'epriority' a cada vez que incrementamos o atributo 'counter'.
+Para os dois códigos utilizamos como prioridade efetiva a soma da prioridade aplicada pelo próprio sistema operacional através
+do atributo priority no bloco de controle de processo (prioridade base estática), mais a prioridade escolhida de usuário
+(atributo 'nice' do bloco de controle de processo também, alterada através da chamada de sistema nice()), junto com o
+tempo de espera daquele processo na fila (prioridade dinâmica). Para a prioridade dinâmica, incrementamos o atributo 'epriority'
+a cada vez que incrementamos o atributo 'counter'.
 
-Com a criação do atributo epriority, tivemos que alterar o bloco de controle de processos assim como a inicialização desse atributo do processo 'IDLE' e de um processo 'x' criado pela chamada de sistemas fork().
+Com a criação do atributo epriority, tivemos que alterar o bloco de controle de processos assim como a inicialização desse atributo
+do processo 'IDLE' e de um processo 'x' criado pela chamada de sistemas fork().
 
-O primeiro processo a ser executado recebe um quantum (PROC_QUANTUM) e após o término desse quantum, ele volta para 'yields' para ver se chegou algum processo com maior prioridade. Caso sim, esse segundo processo é escalonado, caso não, o mesmo processo executa por mais um quantum.
+O primeiro processo a ser executado recebe um quantum (PROC_QUANTUM) e após o término desse quantum, ele volta para 'yields'
+para ver se chegou algum processo com maior prioridade. Caso sim, esse segundo processo é escalonado, caso não, o mesmo processo
+executa por mais um quantum.
 
-A diferença entre a primeira e a segunda representação está na comparação entre as prioridades. Na primeira representação, comparamos prioridades maiores e igual a prioridade do processo atual. Processos com a mesma prioridade revezam entre si até chegar um processo com maior prioridade. Na segunda representação, consideramos processos apenas com prioridade maior. Caso as prioridades sejam a mesma, aquele processo vai ficar mais um ciclo na fila e terá sua prioridade incrementada. Dessa forma, no próximo quantum aquela prioridade será maior que a prioridade que está sendo executada.
+A diferença entre a primeira e a segunda representação está na comparação entre as prioridades. Na primeira representação,
+comparamos prioridades maiores e igual a prioridade do processo atual. Processos com a mesma prioridade revezam entre si
+até chegar um processo com maior prioridade. Na segunda representação, consideramos processos apenas com prioridade maior.
+Caso as prioridades sejam a mesma, aquele processo vai ficar mais um ciclo na fila e terá sua prioridade incrementada.
+Dessa forma, no próximo quantum aquela prioridade será maior que a prioridade que está sendo executada.
 ```
 ## 3. Teste no escalonador Round Robin
 
