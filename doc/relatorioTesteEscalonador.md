@@ -64,9 +64,10 @@ Dessa forma, no próximo quantum aquela prioridade será maior que a prioridade 
 
 >Fila de prioridades 1 - padrão
 
+![WhatsApp Image 2023-10-07 at 11 47 11](https://github.com/isascarabelli/Nanvix/assets/73960096/6702e378-7f74-4430-852b-96f0d515095f)
+
 ![WhatsApp Image 2023-10-07 at 11 32 45](https://github.com/isascarabelli/Nanvix/assets/73960096/635f0220-91b0-4a7c-af4f-2612bbcdb07f)
 
-![WhatsApp Image 2023-10-07 at 11 47 11](https://github.com/isascarabelli/Nanvix/assets/73960096/6702e378-7f74-4430-852b-96f0d515095f)
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
