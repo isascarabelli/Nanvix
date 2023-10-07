@@ -36,7 +36,7 @@
 
 ```bash
 Para os dois códigos utilizamos como prioridade efetiva a soma da prioridade aplicada pelo próprio sistema operacional através
-do atributo priority no bloco de controle de processo (prioridade base estática), mais a prioridade escolhida de usuário
+do atributo 'priority' no bloco de controle de processo (prioridade base estática), mais a prioridade escolhida pelo usuário
 (atributo 'nice' do bloco de controle de processo também, alterada através da chamada de sistema nice()), junto com o
 tempo de espera daquele processo na fila (prioridade dinâmica). Para a prioridade dinâmica, incrementamos o atributo
 'epriority' a cada vez que incrementamos o atributo 'counter'.
