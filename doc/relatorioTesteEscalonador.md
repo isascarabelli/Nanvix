@@ -42,7 +42,7 @@ tempo de espera daquele processo na fila (prioridade dinâmica). Para a priorida
 >Com a criação do atributo 'epriority', tivemos que alterar o bloco de controle de processos assim como a inicialização desse
 atributo do processo 'IDLE' e de um processo 'x' criado pela chamada de sistemas fork().
 
-O primeiro processo a ser executado recebe um quantum (PROC_QUANTUM) e após o término desse quantum, ele volta para
+>O primeiro processo a ser executado recebe um quantum (PROC_QUANTUM) e após o término desse quantum, ele volta para
 'yields' para ver se chegou algum processo com maior prioridade. Caso sim, esse segundo processo é escalonado, caso não,
 o mesmo processo executa por mais um quantum.
 
@@ -90,8 +90,7 @@ imagens dos testes
 
 ## 5. Comparação entre os escalonadores
 
-> Levando em conta os testes feit![WhatsApp Image 2023-10-07 at 11 39 07]
-os, ......
+> Levando em conta os testes feitos, ......
 
 ## 6. Conclusões 
 
