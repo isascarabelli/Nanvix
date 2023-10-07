@@ -89,11 +89,10 @@ Para a fila de prioridades 1 (padrão) obteve resultados semelhantes ao do padr�
 
 Para a fila de prioridades 2, foi o algoritmo com o pior desempenho, tendo sido notável a diferença para os dois anteriores quando se trata de prioridade dinâmica e sendo ligeiramente menos eficiente no estresse de escalonador.
 
-Logo, foi possível concluir que o algoritmo de fila de prioridades 1 foi o mais eficiente entre todos, sendo que o seu propósito de dar maior importancia para as prioridades dos processos foi cumprido quando comparados aos outros 2 cenários.
-> 
-
 ## 6. Conclusões 
 
-> Levando em conta os testes feitos, ......
+> Levando em conta os testes feitos...
+
+Logo, foi possível concluir que o algoritmo de fila de prioridades 1 foi o mais eficiente entre todos, sendo que o seu propósito de dar maior importancia para as prioridades dos processos foi cumprido quando comparados aos outros 2 cenários.
 
 
