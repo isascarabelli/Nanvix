@@ -33,9 +33,9 @@ PUBLIC pid_t sys_fork(void)
 {
 	int i;                /* Loop index.     */
 	int err;              /* Error?          */
-	struct process proc; / Process.        */
-	struct region reg;   / Memory region.  */
-	struct pregion preg; / Process region. */
+	struct process *proc; /* Process.        */
+	struct region *reg;   /* Memory region.  */
+	struct pregion *preg; /* Process region. */
 
 #if (EDUCATIONAL_KERNEL == 0)
 
