@@ -141,8 +141,8 @@ if (curr_proc != next)
  */
 PUBLIC void yield(void)
 {
-	struct process p;	 // Working process.
-	struct process next; // Next process to run.
+	struct process *p;	 // Working process.
+	struct process *next; // Next process to run.
 
 	// Re-schedule process for execution.
 	if (curr_proc->state == PROC_RUNNING)
