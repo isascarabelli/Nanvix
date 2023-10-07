@@ -81,6 +81,15 @@ Dessa forma, no próximo quantum aquela prioridade será maior que a prioridade 
 
 ## 5. Comparação entre os escalonadores
 
+Para este trabalho, resolvemos usar de 2 algoritmos de fila de prioridades mais o algoritmo padrão do nanvix para fim de testes sobre qual dos algoritmos é mais eficiente.
+
+A prioridade dinâmica do algoritmo padrão do nanvix foi satisfatória nos testes de prioridade dinâmica, com um tempo razoável. Porém nos testes de estresse do escalonador o algoritmo se mostrou eficiente, com um tempo baixo em todos os testes.
+
+Para a fila de prioridades 1 (padrão) obteve resultados semelhantes ao do padrão do nanvix no quesito de estresse do escalonador, sendo mais eficiente quando se trata de processos com prioridade dinâmica, o que indica que o algoritmo para as prioridades mostrou ganhos de performance, porém não muito significativos.
+
+Para a fila de prioridades 2, foi o algoritmo com o pior desempenho, tendo sido notável a diferença para os dois anteriores quando se trata de prioridade dinâmica e sendo ligeiramente menos eficiente no estresse de escalonador.
+
+Logo, foi possível concluir que o algoritmo de fila de prioridades 1 foi o mais eficiente entre todos, sendo que o seu propósito de dar maior importancia para as prioridades dos processos foi cumprido quando comparados aos outros 2 cenários.
 > 
 
 ## 6. Conclusões 
