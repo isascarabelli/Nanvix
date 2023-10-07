@@ -93,6 +93,5 @@ Para a fila de prioridades 2, foi o algoritmo com o pior desempenho, tendo sido 
 
 > Levando em conta os testes feitos...
 
-Logo, foi possível concluir que o algoritmo de fila de prioridades 1 foi o mais eficiente entre todos, sendo que o seu propósito de dar maior importancia para as prioridades dos processos foi cumprido quando comparados aos outros 2 cenários.
-
+Em síntese, os resultados obtidos neste trabalho revelam que, embora o algoritmo padrão do nanvix tenha demonstrado uma performance satisfatória em testes de prioridade dinâmica e eficiência notável em situações de estresse do escalonador, a implementação da fila de prioridades 1 revelou ganhos expressivos, especialmente em processos com prioridade dinâmica. No entanto, a fila de prioridades 2 apresentou o pior desempenho, evidenciando uma clara disparidade em relação aos outros dois algoritmos, tanto em termos de prioridade dinâmica quanto no contexto de estresse do escalonador. Logo, foi possível concluir que o algoritmo de fila de prioridades 1 foi o mais eficiente entre todos, sendo que o seu propósito de dar maior importância para as prioridades dos processos foi cumprido quando comparados aos outros 2 cenários.
 
