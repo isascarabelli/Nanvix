@@ -96,31 +96,31 @@ PUBLIC void yield(void)
 		if (p->state != PROC_READY)
 			continue;
 
-		/*
-		 * Process with higher
-		 * waiting time found.
-		 */
+		
+		// Process with higher
+		//waiting time found.
+		 
 /*		if (p->counter > next->counter)
 		{
 			next->counter++;
 			next = p;
 		}
 
-		/*
-		 * Increment waiting
-		 * time of process.
-		 */
+		
+		 //Increment waiting
+		 //time of process.
+		 
 /*		else
 			p->counter++;
 	}
 
-	/* Switch to next process. */
-/*next->priority = PRIO_USER;
-next->state = PROC_RUNNING;
-next->counter = PROC_QUANTUM;
-if (curr_proc != next)
-	switch_to(next);
-}
+	//Switch to next process.
+	next->priority = PRIO_USER;
+	next->state = PROC_RUNNING;
+	next->counter = PROC_QUANTUM;
+	if (curr_proc != next)
+		switch_to(next);
+	}
 */
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
