@@ -5,25 +5,25 @@
 
 >Funções implementadas em src/sbin/test/test.c
 
-> sched_test0
+> #sched_test0
 Função usada para testar a chamada de sistema wait(), gerando dois processos,
 um processo pai e um filho. Retornando 0, caso for aprovado no teste,
 ou algo diferente de 0 caso contrário e o seu tempo de execução;
 
-> sched_test1
+> #sched_test1
 Função usada para o teste do problema de inversão de prioridade,
 ajustando as prioridades dos processos e executando trabalho intensivo em processos
 diferentes, a fim de verificar como o escalanador lida com as prioridades dinâmicas.
 Retornando 0, caso for aprovado no teste, ou algo diferente de 0
 caso contrário e o seu tempo de execução;
 
->sched_test2
+> #sched_test2
 Função usada para criar vários processos que estressam o escalonador,
 alguns executando e outros em pausa, a fim de verificar como o escalonador lida
 com uma carga variada de processos. Retornando 0, caso for aprovado no teste,
 ou algo diferente de 0 caso contrário e o seu tempo de execução;
 
->sched_test3
+> #sched_test3
 Função usada para criar vários processos, forçando o sistema estressar o escalonador,
 a fim de verificar como o escalonador lida com uma carga elevada de processos.
 Retornando 0, caso for aprovado no teste, ou algo diferente de 0
@@ -33,20 +33,20 @@ caso contrário e o seu tempo de execução;
 
 > Implementação de duas formas para representação da fila de prioridades.
 
-Para os dois códigos utilizamos como prioridade efetiva a soma da prioridade aplicada pelo próprio sistema operacional através
+>Para os dois códigos utilizamos como prioridade efetiva a soma da prioridade aplicada pelo próprio sistema operacional através
 do atributo 'priority' no bloco de controle de processo (prioridade base estática), mais a prioridade escolhida pelo usuário
 (atributo 'nice' do bloco de controle de processo também, alterada através da chamada de sistema nice()), junto com o
 tempo de espera daquele processo na fila (prioridade dinâmica). Para a prioridade dinâmica, incrementamos o atributo
 'epriority' a cada vez que incrementamos o atributo 'counter'.
 
-Com a criação do atributo 'epriority', tivemos que alterar o bloco de controle de processos assim como a inicialização desse
+>Com a criação do atributo 'epriority', tivemos que alterar o bloco de controle de processos assim como a inicialização desse
 atributo do processo 'IDLE' e de um processo 'x' criado pela chamada de sistemas fork().
 
 O primeiro processo a ser executado recebe um quantum (PROC_QUANTUM) e após o término desse quantum, ele volta para
 'yields' para ver se chegou algum processo com maior prioridade. Caso sim, esse segundo processo é escalonado, caso não,
 o mesmo processo executa por mais um quantum.
 
-A diferença entre a primeira e a segunda representação está na comparação entre as prioridades. Na primeira representação,
+>A diferença entre a primeira e a segunda representação está na comparação entre as prioridades. Na primeira representação,
 comparamos prioridades maiores e igual a prioridade do processo atual. Processos com a mesma prioridade revezam entre si
 até chegar um processo com maior prioridade. Na segunda representação, consideramos processos apenas com prioridade maior.
 Caso as prioridades sejam a mesma, aquele processo vai ficar mais um ciclo na fila e terá sua prioridade incrementada.
@@ -62,9 +62,9 @@ imagens dos testes
 
 ## 4. Teste no escalonador Fila de Prioridades
 
-Prints dos testes:
+>Prints dos testes:
 
-ROUND-ROBIN natural do Nanvix
+>ROUND-ROBIN natural do Nanvix
 
 ![WhatsApp Image 2023-10-07 at 11 39 07](https://github.com/isascarabelli/Nanvix/assets/73960096/6869f8fb-7058-4118-be27-5d5ab5c3e1b1)
 
@@ -72,7 +72,7 @@ ROUND-ROBIN natural do Nanvix
 
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-Fila de prioridades 1 - padrão
+>Fila de prioridades 1 - padrão
 
 ![WhatsApp Image 2023-10-07 at 11 47 11](https://github.com/isascarabelli/Nanvix/assets/73960096/6702e378-7f74-4430-852b-96f0d515095f)
 
@@ -80,7 +80,7 @@ Fila de prioridades 1 - padrão
 
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-Fila de prioridades 2
+>Fila de prioridades 2
 
 ![WhatsApp Image 2023-10-07 at 11 37 17](https://github.com/isascarabelli/Nanvix/assets/73960096/502336bd-7d56-4ea0-89f2-7b0ba8ab82eb)
 
