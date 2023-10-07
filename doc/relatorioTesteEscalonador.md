@@ -7,28 +7,28 @@
 
 ```bash
 # sched_test0
-# Função usada para testar a chamada de sistema wait(), gerando dois processos,
-# um processo pai e um filho. Retornando 0, caso for aprovado no teste,
-# ou algo diferente de 0 caso contrário e o seu tempo de execução;
-#
+Função usada para testar a chamada de sistema wait(), gerando dois processos,
+um processo pai e um filho. Retornando 0, caso for aprovado no teste,
+ou algo diferente de 0 caso contrário e o seu tempo de execução;
+
 # sched_test1
-# Função usada para o teste do problema de inversão de prioridade,
-# ajustando as prioridades dos processos e executando trabalho intensivo em processos
-# diferentes, a fim de verificar como o escalanador lida com as prioridades dinâmicas.
-# Retornando 0, caso for aprovado no teste, ou algo diferente de 0
-# caso contrário e o seu tempo de execução;
-#
+Função usada para o teste do problema de inversão de prioridade,
+ajustando as prioridades dos processos e executando trabalho intensivo em processos
+diferentes, a fim de verificar como o escalanador lida com as prioridades dinâmicas.
+Retornando 0, caso for aprovado no teste, ou algo diferente de 0
+caso contrário e o seu tempo de execução;
+
 # sched_test2
-# Função usada para criar vários processos que estressam o escalonador,
-# alguns executando e outros em pausa, a fim de verificar como o escalonador lida
-# com uma carga variada de processos. Retornando 0, caso for aprovado no teste,
-# ou algo diferente de 0 caso contrário e o seu tempo de execução;
-#
+Função usada para criar vários processos que estressam o escalonador,
+alguns executando e outros em pausa, a fim de verificar como o escalonador lida
+com uma carga variada de processos. Retornando 0, caso for aprovado no teste,
+ou algo diferente de 0 caso contrário e o seu tempo de execução;
+
 # sched_test3
-# Função usada para criar vários processos, forçando o sistema estressar o escalonador,
-# a fim de verificar como o escalonador lida com uma carga elevada de processos.
-# Retornando 0, caso for aprovado no teste, ou algo diferente de 0
-# caso contrário e o seu tempo de execução;
+Função usada para criar vários processos, forçando o sistema estressar o escalonador,
+a fim de verificar como o escalonador lida com uma carga elevada de processos.
+Retornando 0, caso for aprovado no teste, ou algo diferente de 0
+caso contrário e o seu tempo de execução;
 ```
 ## 2. Algoritmo fila de prioridades
 
@@ -69,10 +69,7 @@ imagens dos testes
 Prints dos testes:
 
 ROUND-ROBIN natural do Nanvix
-![WhatsApp Image 2023-10-07 at 11 39 07](https://github.com/isascarabelli/Nanvix/assets/73960096/d34641ce-2f2e-4cc6-84db-ea1a250c95a8)
-
-![WhatsApp Image 2023-10-07 at 11 51 30](https://github.com/isascarabelli/Nanvix/assets/73960096/862e338a-17f4-489a-89ea-5e7ae6b61fdc)
-
+(https://github.com/isascarabelli/Nanvix/assets/73960096/03c23cf5-9131-4079-9d54-0712934786f0)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 Fila de prioridades 1 - padrão
 
@@ -91,7 +88,8 @@ Fila de prioridades 2
 
 ## 5. Comparação entre os escalonadores
 
-> Levando em conta os testes feitos, ......
+> Levando em conta os testes feit![WhatsApp Image 2023-10-07 at 11 39 07]
+os, ......
 
 ## 6. Conclusões 
 
