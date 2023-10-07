@@ -256,9 +256,10 @@ PUBLIC void yield(void)
 		}
 
 		// Increment waiting time and effective priority of process.
-		else
+		else {
 			p->epriority++;
 			p->counter++;
+   		}
 	}
 
 	// Switch to next process.
