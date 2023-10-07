@@ -5,7 +5,6 @@
 
 >Funções implementadas em src/sbin/test/test.c
 
-```bash
 # sched_test0
 Função usada para testar a chamada de sistema wait(), gerando dois processos,
 um processo pai e um filho. Retornando 0, caso for aprovado no teste,
@@ -29,12 +28,11 @@ Função usada para criar vários processos, forçando o sistema estressar o esc
 a fim de verificar como o escalonador lida com uma carga elevada de processos.
 Retornando 0, caso for aprovado no teste, ou algo diferente de 0
 caso contrário e o seu tempo de execução;
-```
+
 ## 2. Algoritmo fila de prioridades
 
 > Implementação de duas formas para representação da fila de prioridades.
 
-```bash
 Para os dois códigos utilizamos como prioridade efetiva a soma da prioridade aplicada pelo próprio sistema operacional através
 do atributo 'priority' no bloco de controle de processo (prioridade base estática), mais a prioridade escolhida pelo usuário
 (atributo 'nice' do bloco de controle de processo também, alterada através da chamada de sistema nice()), junto com o
@@ -53,7 +51,7 @@ comparamos prioridades maiores e igual a prioridade do processo atual. Processos
 até chegar um processo com maior prioridade. Na segunda representação, consideramos processos apenas com prioridade maior.
 Caso as prioridades sejam a mesma, aquele processo vai ficar mais um ciclo na fila e terá sua prioridade incrementada.
 Dessa forma, no próximo quantum aquela prioridade será maior que a prioridade que está sendo executada.
-```
+
 ## 3. Teste no escalonador Round Robin
 
 ```bash
@@ -64,27 +62,31 @@ imagens dos testes
 
 ## 4. Teste no escalonador Fila de Prioridades
 
-```bash
-
 Prints dos testes:
 
 ROUND-ROBIN natural do Nanvix
-(https://github.com/isascarabelli/Nanvix/assets/73960096/03c23cf5-9131-4079-9d54-0712934786f0)
+
+![WhatsApp Image 2023-10-07 at 11 39 07](https://github.com/isascarabelli/Nanvix/assets/73960096/6869f8fb-7058-4118-be27-5d5ab5c3e1b1)
+
+![WhatsApp Image 2023-10-07 at 11 51 30](https://github.com/isascarabelli/Nanvix/assets/73960096/5ccc87a0-d86b-460b-bac9-7efc56b420c3)
+
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 Fila de prioridades 1 - padrão
 
-![WhatsApp Image 2023-10-07 at 11 47 11](https://github.com/isascarabelli/Nanvix/assets/73960096/b8e6fe96-2c8f-45d2-b736-454f10e45aee)
+![WhatsApp Image 2023-10-07 at 11 47 11](https://github.com/isascarabelli/Nanvix/assets/73960096/6702e378-7f74-4430-852b-96f0d515095f)
 
-![WhatsApp Image 2023-10-07 at 11 32 45](https://github.com/isascarabelli/Nanvix/assets/73960096/e42a177d-ba5f-4140-a787-4d9ffe31a2ba)
+![WhatsApp Image 2023-10-07 at 11 32 45](https://github.com/isascarabelli/Nanvix/assets/73960096/635f0220-91b0-4a7c-af4f-2612bbcdb07f)
+
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 Fila de prioridades 2
 
-![WhatsApp Image 2023-10-07 at 11 37 17](https://github.com/isascarabelli/Nanvix/assets/73960096/0f57661c-9c15-4ecb-81f6-6d40092555d6)
+![WhatsApp Image 2023-10-07 at 11 37 17](https://github.com/isascarabelli/Nanvix/assets/73960096/502336bd-7d56-4ea0-89f2-7b0ba8ab82eb)
 
-![WhatsApp Image 2023-10-07 at 11 49 25](https://github.com/isascarabelli/Nanvix/assets/73960096/46d26e06-ab97-4c77-8471-44ed793d3bb8)
 
-```
+![WhatsApp Image 2023-10-07 at 11 49 25](https://github.com/isascarabelli/Nanvix/assets/73960096/bea6c1dc-daf7-4378-aa5a-cb592b75b2a7)
+
 
 ## 5. Comparação entre os escalonadores
 
@@ -94,4 +96,5 @@ os, ......
 ## 6. Conclusões 
 
 > Levando em conta os testes feitos, ......
+
 
