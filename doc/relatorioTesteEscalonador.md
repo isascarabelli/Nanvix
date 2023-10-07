@@ -41,7 +41,7 @@ do atributo 'priority' no bloco de controle de processo (prioridade base estáti
 tempo de espera daquele processo na fila (prioridade dinâmica). Para a prioridade dinâmica, incrementamos o atributo
 'epriority' a cada vez que incrementamos o atributo 'counter'.
 
-Com a criação do atributo epriority, tivemos que alterar o bloco de controle de processos assim como a inicialização desse
+Com a criação do atributo 'epriority', tivemos que alterar o bloco de controle de processos assim como a inicialização desse
 atributo do processo 'IDLE' e de um processo 'x' criado pela chamada de sistemas fork().
 
 O primeiro processo a ser executado recebe um quantum (PROC_QUANTUM) e após o término desse quantum, ele volta para
@@ -65,16 +65,35 @@ imagens dos testes
 ## 4. Teste no escalonador Fila de Prioridades
 
 ```bash
-## Tempo de Execução:
-# prints dos testes
-imagem dos testes
+
+Prints dos testes:
+
+ROUND-ROBIN natural do Nanvix
+![WhatsApp Image 2023-10-07 at 11 39 07](https://github.com/isascarabelli/Nanvix/assets/73960096/d34641ce-2f2e-4cc6-84db-ea1a250c95a8)
+
+![WhatsApp Image 2023-10-07 at 11 51 30](https://github.com/isascarabelli/Nanvix/assets/73960096/862e338a-17f4-489a-89ea-5e7ae6b61fdc)
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Fila de prioridades 1 - padrão
+
+![WhatsApp Image 2023-10-07 at 11 47 11](https://github.com/isascarabelli/Nanvix/assets/73960096/b8e6fe96-2c8f-45d2-b736-454f10e45aee)
+
+![WhatsApp Image 2023-10-07 at 11 32 45](https://github.com/isascarabelli/Nanvix/assets/73960096/e42a177d-ba5f-4140-a787-4d9ffe31a2ba)
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+Fila de prioridades 2
+
+![WhatsApp Image 2023-10-07 at 11 37 17](https://github.com/isascarabelli/Nanvix/assets/73960096/0f57661c-9c15-4ecb-81f6-6d40092555d6)
+
+![WhatsApp Image 2023-10-07 at 11 49 25](https://github.com/isascarabelli/Nanvix/assets/73960096/46d26e06-ab97-4c77-8471-44ed793d3bb8)
+
 ```
 
 ## 5. Comparação entre os escalonadores
 
 > Levando em conta os testes feitos, ......
 
-## 5. Conclusões 
+## 6. Conclusões 
 
 > Levando em conta os testes feitos, ......
 
