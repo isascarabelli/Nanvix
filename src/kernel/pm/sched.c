@@ -59,38 +59,40 @@ PUBLIC void resume(struct process *proc)
 		sched(proc);
 }
 
-/**
- * @brief Yields the processor.
- */
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+/*
+//Round-Robin natural do Nanvix
+
 PUBLIC void yield(void)
 {
-	struct process *p;    /* Working process.     */
-	struct process *next; /* Next process to run. */
+	struct process *p;    //Working process.
+	struct process *next; // Next process to run.
 
-	/* Re-schedule process for execution. */
+	// Re-schedule process for execution.
 	if (curr_proc->state == PROC_RUNNING)
 		sched(curr_proc);
 
-	/* Remember this process. */
+	// Remember this process.
 	last_proc = curr_proc;
 
-	/* Check alarm. */
+	//Check alarm.
 	for (p = FIRST_PROC; p <= LAST_PROC; p++)
 	{
-		/* Skip invalid processes. */
+		// Skip invalid processes.
 		if (!IS_VALID(p))
 			continue;
 
-		/* Alarm has expired. */
+		// Alarm has expired.
 		if ((p->alarm) && (p->alarm < ticks))
 			p->alarm = 0, sndsig(p, SIGALRM);
 	}
 
-	/* Choose a process to run next. */
+	// Choose a process to run next.
 	next = IDLE;
 	for (p = FIRST_PROC; p <= LAST_PROC; p++)
 	{
-		/* Skip non-ready process. */
+		// Skip non-ready process.
 		if (p->state != PROC_READY)
 			continue;
 
@@ -98,7 +100,7 @@ PUBLIC void yield(void)
 		 * Process with higher
 		 * waiting time found.
 		 */
-		if (p->counter > next->counter)
+/*		if (p->counter > next->counter)
 		{
 			next->counter++;
 			next = p;
@@ -108,14 +110,164 @@ PUBLIC void yield(void)
 		 * Increment waiting
 		 * time of process.
 		 */
-		else
+/*		else
 			p->counter++;
 	}
 
 	/* Switch to next process. */
+/*next->priority = PRIO_USER;
+next->state = PROC_RUNNING;
+next->counter = PROC_QUANTUM;
+if (curr_proc != next)
+	switch_to(next);
+}
+*/
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+/*
+	Política de escalonamento utilizando prioridade efetiva
+	(prioridade definida pelo usuário dada pela função nice,
+	prioridade definida pelo sistema e tempo de espera na fila),
+	a cada término de quantum, volta para checar se
+	existe algum processo com prioridade maior,
+	caso não, executa por mais um quantum.
+	Processos com a mesma prioridade, serão revezados entre si
+	a cada quantum.
+*/
+
+/**
+ * @brief Yields the processor. Priority scheduling
+ */
+PUBLIC void yield(void)
+{
+	struct process p;	 // Working process.
+	struct process next; // Next process to run.
+
+	// Re-schedule process for execution.
+	if (curr_proc->state == PROC_RUNNING)
+		sched(curr_proc);
+
+	// Remember this process.
+	last_proc = curr_proc;
+
+	// Check alarm.
+	for (p = FIRST_PROC; p <= LAST_PROC; p++)
+	{
+		// Skip invalid processes.
+		if (!IS_VALID(p))
+			continue;
+
+		// Alarm has expired.
+		if ((p->alarm) && (p->alarm < ticks))
+			p->alarm = 0, sndsig(p, SIGALRM);
+	}
+
+	// Choose a process to run next.
+	next = IDLE;
+	next->epriority = curr_proc->epriority;
+	for (p = FIRST_PROC; p <= LAST_PROC; p++)
+	{
+		// Skip non-ready process.
+		if (p->state != PROC_READY)
+			continue;
+
+		if (p->epriority >= next->epriority && p != curr_proc)
+		{ // processo com prioridade maior ou igual que o processo atual, não sendo o processo atual
+
+			next->epriority++;
+			next->counter++;
+			next = p;
+		}
+
+		// Increment waiting time of process and effective priority.
+		else
+		{
+			p->epriority++;
+			p->counter++;
+		}
+	}
+
+	// Aqui, next é o processo com maior prioridade efetiva .
+
+	// Switch to next process.
 	next->priority = PRIO_USER;
+	next->epriority = next->nice + next->priority; // Reseta a prioridade efetiva sem o counter que indica o tempo de fila e atualiza o valor com o novo valor de priority.
+	next->state = PROC_RUNNING;
+	next->counter = PROC_QUANTUM;
+	if (curr_proc != next)
+		switch_to(next); // Caso não haja um processo com a prioridade maior ou igual ao processo atual, mais um quantum será executado.
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+/*
+	Política de escalonamento utilizando prioridade efetiva,
+	a cada término de quantum, volta para checar se
+	existe algum processo com prioridade maior,
+	caso não, executa por mais um quantum. Diferente do
+	algoritmo de fila de prioridades aqui também implementado,
+	esse algoritmo se preocupa apenas com prioridade maiores
+	do que a do processo já executando.
+	Processos com a mesma prioridade,
+	vão ficar mais um tempo na fila de espera,
+	aumentando sua prioridade efetiva, sendo o próximo
+	a ser executado.
+*/
+/*
+PUBLIC void yield(void)
+{
+	struct process *p;    //Working process.
+	struct process *next; // Next process to run.
+
+	// Re-schedule process for execution.
+	if (curr_proc->state == PROC_RUNNING)
+		sched(curr_proc);
+
+	// Remember this process.
+	last_proc = curr_proc;
+
+	//Check alarm.
+	for (p = FIRST_PROC; p <= LAST_PROC; p++)
+	{
+		// Skip invalid processes.
+		if (!IS_VALID(p))
+			continue;
+
+		// Alarm has expired.
+		if ((p->alarm) && (p->alarm < ticks))
+			p->alarm = 0, sndsig(p, SIGALRM);
+	}
+
+	// Choose a process to run next.
+	next = IDLE;
+	for (p = FIRST_PROC; p <= LAST_PROC; p++)
+	{
+		// Skip non-ready process.
+		if (p->state != PROC_READY)
+			continue;
+
+		//Process with higher effective priority found.
+		if (p->epriority > next->epriority)
+		{
+			next->epriority++;
+			next->counter++;
+			next = p;
+		}
+
+		// Increment waiting time and effective priority of process.
+		else
+			p->epriority++;
+			p->counter++;
+	}
+
+	// Switch to next process.
+	next->priority = PRIO_USER;
+	next->epriority = next->priority + next->nice;
 	next->state = PROC_RUNNING;
 	next->counter = PROC_QUANTUM;
 	if (curr_proc != next)
 		switch_to(next);
 }
+
+*/
