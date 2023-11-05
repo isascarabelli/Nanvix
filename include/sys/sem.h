@@ -24,10 +24,12 @@
 	 * @brief Comand values for semaphores.
 	 */
 	/**@{*/
-	#define GETVAL   0   /**< Returns the value of a semaphore.  */
-	#define SETVAL   1   /**< Sets the value of a semaphore.     */
-	#define IPC_RMID 3   /**< Destroys a semaphore.              */
-	#define SEM_MAX  10  /**< Set the max value for a semaphore. */
+	#define GETVAL   0   				/**< Returns the value of a semaphore.  */
+	#define SETVAL   1   				/**< Sets the value of a semaphore.     */
+	#define IPC_RMID 3   				/**< Destroys a semaphore.              */
+	#define SEM_MAX  10  				/**< Set the max value for a semaphore. */
+	#define FIRST_SEM ((&semtab[0]))			/**< First semaphore. */
+	#define LAST_SEM ((&semtab[SEM_MAX - 1]))	/**< Last semaphore. */
 	/**@}*/
 
 	/* Forward definitions. */
@@ -38,10 +40,13 @@
 	/* Struct that keeps semaphore information */
 	struct semaphore
 	{
-		int id;
-		unsigned val;
-		unsigned curr_val;
+		int id;				/**< Semaphore ID. */
+		unsigned val;		/**< Top value of semaphore. */
+		unsigned curr_val;	/**< Current value of semaphore. */
 
 	};
+
+	/* Forward definitions. */
+	extern struct semaphore semtab[SEM_MAX];
 
 #endif /* SEM_H_ */
