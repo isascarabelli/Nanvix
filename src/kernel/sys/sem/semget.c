@@ -27,16 +27,19 @@
 #include <nanvix/pm.h>
 #include <sys/sem.h>
 
-PUBLIC void sys_semget(unsigned key){
+PUBLIC int sys_semget(unsigned key){
 
     struct semaphore *sem;
 
-    for (sem = 0; sem < SEM_MAX; sem++){
+    //Searching for key
+    for (sem = FIRST_SEM; sem < LAST_SEM; sem++){
         if (sem->id == key){
             return key;
-        } else {
-            sem->id = key;
         }
     }
+
+    semtab[key]->id = key;          /**< Creating semaphore. */
+    semtab[key]->val = SETVAL;      /**< Set semaphore with max value (mutex). */
+    semtab[key]->curr_val = SETVAL; /**< Semaphore with current value 1 (mutex). */
 
 }
