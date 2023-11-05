@@ -21,8 +21,8 @@
 #ifndef NANVIX_SYSCALL_H_
 #define NANVIX_SYSCALL_H_
 
-	#include <nanvix/const.h>
 	#include <sys/stat.h>
+	#include <nanvix/const.h>
 	#include <sys/times.h>
 	#include <sys/types.h>
 	#include <sys/utsname.h>
