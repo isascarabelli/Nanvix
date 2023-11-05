@@ -270,7 +270,23 @@
 	/*
 	 * Chamada de kernel que retorna para um buffer de usuário as informações de um processo.
 	 */
-	EXTERN void sys_get_process_info( pid_t pid, struct process_buf *buf );
+	EXTERN void sys_get_process_info( pid_t pid, struct process_buf *buf);
+
+	/*
+ 	* Creates a semaphore or returns the key.
+ 	*/
+	EXTERN PUBLIC int sys_semget(unsigned key);
+
+	/*
+ 	* Allows 3 options in 'semid' semaphore depending on 'cmd' value.
+  	*/
+	EXTERN PUBLIC void sys_semctl(int semid, int cmd, int val);
+
+	/*
+ 	* Allows atomics operations up and down	in the semaphore with id 'semid'.
+  	*/
+	EXTERN PUBLIC void sys_semop(int semid, int op);
+
 
 #endif /* _ASM_FILE_ */
 
