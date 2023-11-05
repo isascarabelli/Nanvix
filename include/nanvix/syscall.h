@@ -30,6 +30,7 @@
 	#include <ustat.h>
 	#include <utime.h>
 	#include <nanvix/pm.h>
+	#include <sys/sem.h>
 
 	/* Number of system calls. */
 	#define NR_SYSCALLS 52
