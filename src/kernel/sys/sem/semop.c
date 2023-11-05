@@ -23,22 +23,22 @@
 #include <nanvix/pm.h>
 #include <sys/sem.h>
 
-PUBLIC void down_sem(struct semaphore *sem){
+PUBLIC void down_sem(struct semaphore *sem, int semid){
 
     if (sem->curr_val > 0)
-        sem->curr_val--;
+        semtab[semid]->curr_val--;
     else
         sleep(curr_proc->chain, PRIO_USER);
 
 }
 
-PUBLIC void up_sem(struct semaphore *sem){
+PUBLIC void up_sem(struct semaphore *sem, int semid){
 
-    if (curr_proc->state == PROC_SLEEPING && sem->curr_val == 0)
+    if (sem->curr_val == 0){
         wakeup(curr_proc->chain);
-
-    if (sem->curr_val >= 0 && sem->curr_val >= sem->val)
-        sem->curr_val++;
+        semtab[semid]->curr_val++;
+    } else if (sem->curr_val > 0 && sem->curr_val <= sem->val)
+        semtab[semid]->curr_val++;
 
 }
 
@@ -46,12 +46,12 @@ PUBLIC void sys_semop(int semid, int op){
 
     struct semaphore *sem;
 
-    for (sem = 0; sem < SEM_MAX; sem++){
+    for (sem = FIRST_SEM; sem < LAST_SEM; sem++){
         if (sem->id == semid){
             if (op < 0) {
-                down_sem(sem);
+                down_sem(sem, semid);
             } else if (op > 0) {
-                up_sem(sem);
+                up_sem(sem, semid);
             }
         }
     }
