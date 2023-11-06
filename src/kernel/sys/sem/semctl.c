@@ -17,26 +17,33 @@
  * along with Nanvix. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+* @brief Performs changes on max value of semaphore or return the current value.
+*/
+
 #include <nanvix/const.h>
 #include <nanvix/hal.h>
 #include <nanvix/klib.h>
 #include <nanvix/pm.h>
 #include <sys/sem.h>
 
-PUBLIC void sys_semctl(int semid, int cmd, int val){
+PUBLIC int sys_semctl(int semid, int cmd, int val){
 
     struct semaphore *sem;
 
-    for (sem = FIRST_SEM; sem < LAST_SEM; sem++){
+    //Searching for semid
+    for (sem = 0; sem < SEM_MAX; sem++){
         if (sem->id == semid){
             if (cmd == GETVAL)
-                return sem->curr_val;
+                return sem->curr_val;       //Return current value.
             if (cmd == SETVAL)
-                semtab[semid]->val = val;
+                semtab[key]->val = val;     //Set max value of semaphore.
             if (cmd == IPC_RMID){
-                semtab[semid]->id = -1;
+                semtab[key]->id = -1;       //Delete semaphore id.
             }
         }
     }
+
+    return 0;
     
 }
