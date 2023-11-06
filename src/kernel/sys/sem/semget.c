@@ -42,4 +42,6 @@ PUBLIC int sys_semget(unsigned key){
     semtab[key]->val = SETVAL;      /**< Set semaphore with max value (mutex). */
     semtab[key]->curr_val = SETVAL; /**< Semaphore with current value 1 (mutex). */
 
+    return 0;
+
 }
