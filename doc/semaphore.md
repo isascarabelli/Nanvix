@@ -24,6 +24,15 @@ O processo escritor espera pelo buffer não estar vazio (`SEM_DOWN(full)`), trav
 
 Após a conclusão dos processos, a função aguarda a saída de ambos os processos filhos, fecha o arquivo do buffer e exclui o arquivo do buffer.
 
+## Chamadas de biblioteca no espaço de usuário 
+// Implementadas em ubin/nomedocomando/nomedocomando.c
+
+- Semget: chama semget (para passar para o espaço em kernel) e faz a verificação dos parâmetros: valor tem que estar na faixa de valores dos ids para semáforos que foram disponibilizados, entre 0 e SEM_MAX.
+  
+- Semop: chama semop (para passar para o espaço em kernel) e faz a verificação dos parâmetros: semid tem que estar na faixa de valores dos semáforos, e op pode ser qualquer valor positivo ou negativo, diferente de 0.
+  
+- Semctl: chama semctl (para passar para o espaço em kernel) e faz a verificação dos parâmetros: semid tem que estar na faixa de valores dos semáforos; cmd precisa ser 0, 1 ou 3; val pode ser qualquer valor maior que 0.
+
 ## Conclusão 
 
 A função retorna 0 se as operações dos semáforos funcionarem corretamente e diferente de zero caso contrário. Ela verifica o resultado de `SEM_POST(mutex)` para determinar o sucesso.
