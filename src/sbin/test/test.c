@@ -455,6 +455,101 @@ static int sched_test3(void)
 }                                                    \
 
 /**
+ * @brief Producer-Consumer problem with semaphores with a buffer size 32.
+ *
+ * @details Reproduces consumer-producer scenario using semaphores.
+ *
+ * @returns Zero if passed on test, and non-zero otherwise.
+ */
+
+#define BUFFER_SIZE 32
+
+int semaphore_test1(void)
+{
+	int buffer_fd;  /* Buffer file descriptor. */
+	int empty;      /* Empty positions         */
+	int full;       /* Full positions.         */
+	int mutex;      /* Mutex.                  */
+
+	/* Create buffer. */
+	buffer_fd = open("buffer", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
+	if (buffer_fd < 0)
+		return (-1);
+
+	/* Create semaphores. */
+	SEM_CREATE(mutex, 1);
+	SEM_CREATE(empty, BUFFER_SIZE);
+	SEM_CREATE(full, 0);
+
+	/* Initialize semaphores. */
+	SEM_INIT(empty, BUFFER_SIZE);
+	SEM_INIT(full, 0);
+	SEM_INIT(mutex, 1);
+
+	/* Fork reader and writer processes. */
+	pid_t pid_reader, pid_writer;
+	pid_reader = fork();
+	if (pid_reader < 0)
+		return (-1);
+	else if (pid_reader == 0) {
+		/* Reader process. */
+		for (int i = 0; i < 10; i++) {
+			/* Wait for an empty position. */
+			SEM_DOWN(empty);
+
+			/* Lock the buffer. */
+			SEM_DOWN(mutex);
+
+			/* Read an item from the buffer. */
+			int item;
+			read(buffer_fd, &item, sizeof(item));
+
+			/* Unlock the buffer. */
+			SEM_UP(mutex);
+
+			/* Signal that a full position is available. */
+			SEM_UP(full);
+		}
+
+		_exit(EXIT_SUCCESS);
+	} else {
+		/* Writer process. */
+		for (int i = 0; i < 10; i++) {
+			/* Wait for the buffer to be empty. */
+			SEM_DOWN(full);
+
+			/* Lock the buffer. */
+			SEM_DOWN(mutex);
+
+			/* Write an item to the buffer. */
+			int item = i;
+			write(buffer_fd, &item, sizeof(item));
+
+			/* Unlock the buffer. */
+			SEM_UP(mutex);
+
+			/* Signal that an empty position is available. */
+			SEM_UP(empty);
+		}
+	}
+
+	/* Wait for child processes to exit. */
+	wait(NULL);
+	wait(NULL);
+
+	/* Close buffer. */
+	close(buffer_fd);
+	unlink("buffer");
+
+	/* Return 1 if semaphore works, 0 if not. */
+	if (SEM_POST(mutex) == 0)
+		return (1);
+	else
+		return (0);
+}
+
+
+/**
  * @brief Producer-Consumer problem with semaphores.
  *
  * @details Reproduces consumer-producer scenario using semaphores.
