@@ -35,6 +35,6 @@ Após a conclusão dos processos, a função aguarda a saída de ambos os proces
 
 ## Conclusão 
 
-A função retorna 0 se as operações dos semáforos funcionarem corretamente e diferente de zero caso contrário. Ela verifica o resultado de `SEM_POST(mutex)` para determinar o sucesso.
+
 
 ## Exemplos 
