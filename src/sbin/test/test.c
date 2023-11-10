@@ -534,6 +534,76 @@ int semaphore_test3(void)
 	return (0);
 }
 
+int semaphore_test4(void){
+	pid_t pid;                  /* Process ID.              */
+	int buffer_fd;              /* Buffer file descriptor.  */
+	int empty;                  /* Empty positions.         */
+	int full;                   /* Full positions.          */
+	int mutex;                  /* Mutex.                   */
+	const int BUFFER_SIZE = 32; /* Buffer size.             */
+	const int NR_ITEMS = 512;   /* Number of items to send. */
+
+	/* Create buffer.*/
+	buffer_fd = open("buffer", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
+	if (buffer_fd < 0)
+		return (-1);
+
+	/* Create semaphores. */
+	SEM_CREATE(mutex, 1);
+	SEM_CREATE(empty, 2);
+	SEM_CREATE(full, 3);
+
+	/* Initialize semaphores. */
+	SEM_INIT(full, 0);
+	SEM_INIT(empty, BUFFER_SIZE);
+	SEM_INIT(mutex, 1);
+
+	if ((pid = fork()) < 0)
+		return (-1);
+
+	/* Leitor */
+	else if (pid_reader == 0) {
+		for (int i = 0; i < 10; i++) {
+			SEM_DOWN(empty);
+
+			SEM_DOWN(mutex);
+
+			int item;
+			read(buffer_fd, &item, sizeof(item));
+
+			SEM_UP(mutex);
+
+			SEM_UP(full);
+		}
+
+		_exit(EXIT_SUCCESS);
+	} else {
+		/* Escritor */
+		for (int i = 0; i < 10; i++) {
+			SEM_DOWN(full);
+
+			SEM_DOWN(mutex);
+
+			int item = i;
+			write(buffer_fd, &item, sizeof(item));
+
+			SEM_UP(mutex);
+
+			SEM_UP(empty);
+		}
+	}
+
+	/* Destroy semaphores. */
+	SEM_DESTROY(mutex);
+	SEM_DESTROY(empty);
+	SEM_DESTROY(full);
+
+	close(buffer_fd);
+	unlink("buffer");
+
+	return (0);
+}
+
 /*============================================================================*
  *                                FPU test                                    *
  *============================================================================*/
@@ -694,6 +764,9 @@ int main(int argc, char **argv)
 			printf("Interprocess Communication Tests\n");
 			printf("  producer consumer [%s]\n",
 				(!semaphore_test3()) ? "PASSED" : "FAILED");
+			printf("\n\n");
+			printf("  reader and writer [%s]\n",
+				(!semaphore_test4()) ? "PASSED" : "FAILED");
 		}
 
 		/* FPU test. */
