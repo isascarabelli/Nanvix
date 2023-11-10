@@ -7,6 +7,27 @@
   
 - Semctl: chama semctl (para passar para o espaço em kernel) e faz a verificação dos parâmetros: semid tem que estar na faixa de valores dos semáforos; cmd precisa ser 0, 1 ou 3; val pode ser qualquer valor maior que 0.
 
+# Chamadas de sistema da implementação do semáforo
+
+## O semáforo
+
+A estrutura do semáforo está presente no arquivo `sem.h`, que é responsável por conter tudo o que o semáforo precisa. Para isso, foi criado a seguinte `struct semaphore`:
+
+```c
+struct semaphore
+	{
+		int id;		/**< Semaphore ID. */
+		unsigned val;		/**< Top value of semaphore. */
+		unsigned curr_val;	/**< Current value of semaphore. */
+
+	};
+```
+Nesse mesmo arquivo, foi criado a tabela de semáforos, que mantém todos os semáforos e é definida por uma valor máximo de semáforos, nesse trabalho definido como 10, mas sendo esse valor alternado em `SEM_MAX`.
+
+Além disso, foi também criado um arquivo `sem.c` que apenas constroi essa tabela de páginas.
+
+##
+
 ## Função para Leitores e Escritores da `semaphore_test4`
 
 A função `semaphore_test4`, implementada em src/sbin/test/test.c demonstra um cenário simples de comunicação entre processos usando semáforos. Ela cria um buffer e dois processos: um leitor e um escritor. Os processos se comunicam lendo e escrevendo itens inteiros no buffer. Semáforos são utilizados para controlar o acesso ao buffer compartilhado e sincronizar as operações entre os processos.
