@@ -9,7 +9,7 @@
 
 ## Chamadas de sistema da implementação do semáforo
 
-## O semáforo
+### O semáforo
 include/sys/sem.h
 
 A estrutura do semáforo está presente no arquivo `sem.h`, que é responsável por conter tudo o que o semáforo precisa. Para isso, foi criado a seguinte `struct semaphore`:
