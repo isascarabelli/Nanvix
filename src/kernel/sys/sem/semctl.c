@@ -32,14 +32,14 @@ PUBLIC int sys_semctl(int semid, int cmd, int val){
     struct semaphore *sem;
 
     //Searching for semid
-    for (sem = 0; sem < SEM_MAX; sem++){
+    for (sem = FIRST_SEM; sem < LAST_SEM; sem++){
         if (sem->id == semid){
             if (cmd == GETVAL)
                 return sem->curr_val;       //Return current value.
             if (cmd == SETVAL)
-                semtab[key]->val = val;     //Set max value of semaphore.
+                semtab[semid].val = val;     //Set max value of semaphore.
             if (cmd == IPC_RMID){
-                semtab[key]->id = -1;       //Delete semaphore id.
+                semtab[semid].id = -1;       //Delete semaphore id.
             }
         }
     }
