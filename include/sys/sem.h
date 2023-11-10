@@ -43,8 +43,8 @@
 	struct semaphore
 	{
 		int id;		/**< Semaphore ID. */
-		unsigned val;		/**< Top value of semaphore. */
-		unsigned curr_val;	/**< Current value of semaphore. */
+		int val;		/**< Top value of semaphore. */
+		int curr_val;	/**< Current value of semaphore. */
 
 	};
 
