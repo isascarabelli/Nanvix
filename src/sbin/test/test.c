@@ -557,12 +557,11 @@ int semaphore_test4(void){
 	SEM_INIT(empty, BUFFER_SIZE);
 	SEM_INIT(mutex, 1);
 	
-	pid_t pid_reader, pid_writer;
 	if ((pid = fork()) < 0)
 		return (-1);
 
 	/* Leitor */
-	else if (pid_reader == 0) {
+	else if (pid == 0) {
 		for (int i = 0; i < 10; i++) {
 			SEM_DOWN(empty);
 
