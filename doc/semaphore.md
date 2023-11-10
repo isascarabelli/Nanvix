@@ -34,7 +34,13 @@ src/kernel/sys/sem
 
 ### Semget
 
-A chamada de sistema `semget.c` recebe um inteiro como chave e procura na tabela de semáforos por essa chave. Se é encontrado, retorna o valor da mesma. Se não, um novo semáforo é criado com aquela chave.
+A chamada de sistema `semget.c` recebe um inteiro como chave e procura na tabela de semáforos por essa chave. Se é encontrado, retorna o valor da mesma. Se não, um novo semáforo é criado com aquela chave e que foi criado é salvo em `semtab`.
+
+```c
+semtab[key].id = key;          /**< Creating semaphore. */
+semtab[key].val = SETVAL;      /**< Set semaphore with max value (mutex). */
+semtab[key].curr_val = SETVAL; /**< Semaphore with current value 1 (mutex). */
+```
 
 ### Semctl
 
