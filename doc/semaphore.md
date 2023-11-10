@@ -7,18 +7,18 @@
   
 - Semctl: chama semctl (para passar para o espaço em kernel) e faz a verificação dos parâmetros: semid tem que estar na faixa de valores dos semáforos; cmd precisa ser 0, 1 ou 3; val pode ser qualquer valor maior que 0.
 
-# Função para Leitores e Escritores da `semaphore_test4`
+## Função para Leitores e Escritores da `semaphore_test4`
 
-## Descrição
+##3 Descrição
 
 A função `semaphore_test4` implementa um cenário simples de comunicação entre processos usando semáforos. Ela cria um buffer e dois processos: um leitor e um escritor. Os processos se comunicam lendo e escrevendo itens inteiros no buffer. Semáforos são utilizados para controlar o acesso ao buffer compartilhado e sincronizar as operações entre os processos.
 
-## Retorno
+### Retorno
 
 - Retorna 0 em caso de execução bem-sucedida.
 - Retorna -1 em caso de erro.
 
-## Passos Principais
+### Passos Principais
 
 1. **Criar Arquivo de Buffer:**
    - Abrir ou criar um arquivo chamado "buffer" com permissões de leitura e escrita.
