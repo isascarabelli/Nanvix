@@ -26,8 +26,9 @@
 #include <nanvix/klib.h>
 #include <nanvix/pm.h>
 #include <sys/sem.h>
+#include <stdio.h>
 
-PUBLIC int sys_semget(unsigned key){
+PUBLIC int sys_semget(int key){
 
     struct semaphore *sem;
 
@@ -38,10 +39,9 @@ PUBLIC int sys_semget(unsigned key){
         }
     }
 
-    semtab[key]->id = key;          /**< Creating semaphore. */
-    semtab[key]->val = SETVAL;      /**< Set semaphore with max value (mutex). */
-    semtab[key]->curr_val = SETVAL; /**< Semaphore with current value 1 (mutex). */
-
-    return 0;
+    semtab[key].id = key;          /**< Creating semaphore. */
+    semtab[key].val = SETVAL;      /**< Set semaphore with max value (mutex). */
+    semtab[key].curr_val = SETVAL; /**< Semaphore with current value 1 (mutex). */
+    return key;
 
 }
