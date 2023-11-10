@@ -7,7 +7,7 @@
   
 - Semctl: chama semctl (para passar para o espaço em kernel) e faz a verificação dos parâmetros: semid tem que estar na faixa de valores dos semáforos; cmd precisa ser 0, 1 ou 3; val pode ser qualquer valor maior que 0.
 
-# Chamadas de sistema da implementação do semáforo
+## Chamadas de sistema da implementação do semáforo
 
 ## O semáforo
 include/sys/sem.h
