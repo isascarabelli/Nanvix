@@ -9,7 +9,8 @@
 
 # Chamadas de sistema da implementação do semáforo
 
-## O semáforo
+### O semáforo
+include/sys/sem.h
 
 A estrutura do semáforo está presente no arquivo `sem.h`, que é responsável por conter tudo o que o semáforo precisa. Para isso, foi criado a seguinte `struct semaphore`:
 
@@ -26,7 +27,59 @@ Nesse mesmo arquivo, foi criado a tabela de semáforos, que mantém todos os sem
 
 Além disso, foi também criado um arquivo `sem.c` que apenas constroi essa tabela de páginas.
 
-##
+Todos os semáforos são criados com o valor 1, caracterizando um `mutex`. Para alterar, será necessário utilizar a chamada de sistema `semctl.c`.
+
+## Chamadas de sistema
+src/kernel/sys/sem
+
+### Semget
+
+A chamada de sistema `semget.c` recebe um inteiro como chave e procura na tabela de semáforos por essa chave. Se é encontrado, retorna o valor da mesma. Se não, um novo semáforo é criado com aquela chave.
+
+### Semctl
+
+A chamada de sistema `semctl.c` é responsável pelo controle do semáforo, recebendo o id do semáforo, o que irá ser feito (`cmd`) e um valor. O que irá ser feito no semáforo é regulado pelos seguintes parâmetros especificados em `sem.h`:
+
+```c
+	#define GETVAL   0   	/**< Returns the current value of a semaphore.  */
+	#define SETVAL   1   	/**< Sets the value of a semaphore.     */
+	#define IPC_RMID 3   	/**< Destroys a semaphore.              */
+
+```
+Se `cmd == GETVAL`, o valor atual do semáforo é retornado.
+O ultimo parâmetro é um valor, que só é utilizado caso `cmd == SETVAL`, o que muda o valor máximo do semáforo para o valor presente em `val`.
+Caso `cmd == IPC_RMID`, o semáforo é deletado atribuindo seu id como `-1` e caso o usuário queira criar outro como o mesmo id, deverá chamar por `semget.c`.
+
+### Semop
+
+A chamada de sistema `semop.c` executa as operações de incremento e decremento do semáforo, realizadas pelas funções `up_sem()` e `down_sem()`.
+
+A função `up_sem()` decrementa o semáforo se ele for maior que 0. Se não for, o processo atual deverá ser posto para dormir, pois tentou decrementar um semáforo zerado. Ao acordar, o processo terá a prioridade definida por `PRIO_USER`.
+
+```c
+PUBLIC void down_sem(struct semaphore *sem, int semid){
+
+    if (sem->curr_val > 0)
+        semtab[semid].curr_val--;
+    else
+        sleep(curr_proc->chain, PRIO_USER);
+
+}
+```
+
+A função `down_sem()` incrementa o semáforo apenas se o valor atual for menor que o valor máximo do semáforo. Também acorda o processo atual caso o valor atual do semáforo seja 0.
+
+```c
+PUBLIC void up_sem(struct semaphore *sem, int semid){
+
+    if (sem->curr_val == 0 && sem->curr_val < sem->val){
+        wakeup(curr_proc->chain);
+        semtab[semid].curr_val++;
+    } else if (sem->curr_val > 0 && sem->curr_val < sem->val)
+        semtab[semid].curr_val++;
+
+}
+```
 
 ## Função para Leitores e Escritores da `semaphore_test4`
 
