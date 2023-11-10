@@ -28,23 +28,23 @@
 #include <sys/sem.h>
 
 //Current value decrement or sleeping process
-PUBLIC void down_sem(struct semaphore *sem, int semid){
+PUBLIC void down_sem(struct semaphore *sem, unsigned semid){
 
     if (sem->curr_val > 0)
-        semtab[semid]->curr_val--;
+        semtab[semid].curr_val--;
     else
         sleep(curr_proc->chain, PRIO_USER);
 
 }
 
 //Current value increment and sleeping process
-PUBLIC void up_sem(struct semaphore *sem, int semid){
+PUBLIC void up_sem(struct semaphore *sem, unsigned semid){
 
-    if (sem->curr_val == 0){
+    if (sem->curr_val == 0 && sem->curr_val <= sem->val){
         wakeup(curr_proc->chain);
-        semtab[semid]->curr_val++;
-    } else if (sem->curr_val > 0 && sem->curr_val <= sem->val)
-        semtab[semid]->curr_val++;
+        semtab[semid].curr_val++;
+    } else if (sem->curr_val > 0 && sem->curr_val < sem->val)
+        semtab[semid].curr_val++;
 
 }
 
