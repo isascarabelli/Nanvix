@@ -64,11 +64,9 @@ if ((pid = fork()) < 0)
 
 ```c
 if (pid == 0) {
-    // Processo Leitor
-    // ...
+    //  Leitor
 } else {
-    // Processo Escritor
-    // ...
+    //  Escritor
 }
 ```
 
