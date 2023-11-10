@@ -568,7 +568,7 @@ int semaphore_test4(void){
 			SEM_DOWN(mutex);
 
 			int item;
-			read(buffer_fd, &item, sizeof(item));
+			GET_ITEM(buffer_fd, item);
 
 			SEM_UP(mutex);
 
@@ -584,7 +584,8 @@ int semaphore_test4(void){
 			SEM_DOWN(mutex);
 
 			int item = i;
-			write(buffer_fd, &item, sizeof(item));
+			PUT_ITEM(buffer_fd, item);
+
 
 			SEM_UP(mutex);
 
