@@ -40,7 +40,7 @@ PUBLIC void down_sem(struct semaphore *sem, unsigned semid){
 //Current value increment and sleeping process
 PUBLIC void up_sem(struct semaphore *sem, unsigned semid){
 
-    if (sem->curr_val == 0 && sem->curr_val <= sem->val){
+    if (sem->curr_val == 0 && sem->curr_val < sem->val){
         wakeup(curr_proc->chain);
         semtab[semid].curr_val++;
     } else if (sem->curr_val > 0 && sem->curr_val < sem->val)
