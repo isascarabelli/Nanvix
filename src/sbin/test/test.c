@@ -541,7 +541,6 @@ int semaphore_test4(void){
 	int full;                   /* Full positions.          */
 	int mutex;                  /* Mutex.                   */
 	const int BUFFER_SIZE = 32; /* Buffer size.             */
-	const int NR_ITEMS = 512;   /* Number of items to send. */
 
 	/* Create buffer.*/
 	buffer_fd = open("buffer", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
@@ -557,7 +556,8 @@ int semaphore_test4(void){
 	SEM_INIT(full, 0);
 	SEM_INIT(empty, BUFFER_SIZE);
 	SEM_INIT(mutex, 1);
-
+	
+	pid_t pid_reader, pid_writer;
 	if ((pid = fork()) < 0)
 		return (-1);
 
