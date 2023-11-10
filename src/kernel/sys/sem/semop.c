@@ -28,7 +28,7 @@
 #include <sys/sem.h>
 
 //Current value decrement or sleeping process
-PUBLIC void down_sem(struct semaphore *sem, unsigned semid){
+PUBLIC void down_sem(struct semaphore *sem, int semid){
 
     if (sem->curr_val > 0)
         semtab[semid].curr_val--;
@@ -38,7 +38,7 @@ PUBLIC void down_sem(struct semaphore *sem, unsigned semid){
 }
 
 //Current value increment and sleeping process
-PUBLIC void up_sem(struct semaphore *sem, unsigned semid){
+PUBLIC void up_sem(struct semaphore *sem, int semid){
 
     if (sem->curr_val == 0 && sem->curr_val < sem->val){
         wakeup(curr_proc->chain);
