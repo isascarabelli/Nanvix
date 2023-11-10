@@ -18,6 +18,7 @@
  */
 #ifndef SEM_H_
 #define SEM_H_
+#ifndef _ASM_FILE_
 
 	#include <nanvix/const.h>
 
@@ -34,14 +35,14 @@
 	/**@}*/
 
 	/* Forward definitions. */
-	EXTERN int semget(unsigned);
+	EXTERN int semget(int);
 	EXTERN int semctl(int, int, int);
 	EXTERN int semop(int, int);
 	
 	/* Struct that keeps semaphore information */
 	struct semaphore
 	{
-		int id;				/**< Semaphore ID. */
+		int id;		/**< Semaphore ID. */
 		unsigned val;		/**< Top value of semaphore. */
 		unsigned curr_val;	/**< Current value of semaphore. */
 
@@ -50,4 +51,5 @@
 	/* Forward definitions. */
 	EXTERN struct semaphore semtab[SEM_MAX];
 
+#endif /* _ASM_FILE_ */
 #endif /* SEM_H_ */
