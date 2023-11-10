@@ -9,7 +9,7 @@
 
 ## Função para Leitores e Escritores da `semaphore_test4`
 
-##3 Descrição
+### Descrição
 
 A função `semaphore_test4` implementa um cenário simples de comunicação entre processos usando semáforos. Ela cria um buffer e dois processos: um leitor e um escritor. Os processos se comunicam lendo e escrevendo itens inteiros no buffer. Semáforos são utilizados para controlar o acesso ao buffer compartilhado e sincronizar as operações entre os processos.
 
