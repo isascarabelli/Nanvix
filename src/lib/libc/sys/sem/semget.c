@@ -23,7 +23,7 @@
 /**
  * @brief Creates a semaphore.
  */
-int semget(unsigned key)
+int semget(int key)
 {
 	int ret;
 
