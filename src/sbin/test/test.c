@@ -536,68 +536,62 @@ int semaphore_test3(void)
 
 // Problema dos leitores e Escitores
 
-void produz_dados() {
+void produz_dados(int *item) {
     	srand((unsigned int)time(NULL));
-   	*item = rand() % 100;
+    	*item = rand() % 100;
 }
 
-void escreve_dados(int item) {
-	int item;
-    	PUT_ITEM(buffer_fd, item);
+void escreve_dados(int item, int buffer_fd) {
+    	PUT_ITEM(buffer_fd, item); // Substitua por chamada adequada
 }
 
-void ler_dados() {
-    	int item;
-    	GET_ITEM(buffer_fd, item);
+void ler_dados(int *item, int buffer_fd) {
+    	GET_ITEM(buffer_fd, item); // Substitua por chamada adequada
 }
 
-// Função do leitor
-void leitor() {
+void leitor(int mutex, int bd, int buffer_fd) {
 	
     	SEM_DOWN(mutex);
     	leitores++;
     	if (leitores == 1) {
-        	SEM_DOWN(bd); // Bloqueia o acesso ao buffer para o primeiro leitor
+        	SEM_DOWN(bd);
     	}
     	SEM_UP(mutex);
 
-    	ler_dados();
+    	int item;
+    	ler_dados(&item, buffer_fd);
 
     	SEM_DOWN(mutex);
     	leitores--;
     	if (leitores == 0) {
-        	SEM_UP(bd); // Libera o acesso ao buffer se não houver mais leitores
+        	SEM_UP(bd);
     	}
     	SEM_UP(mutex);
 }
 
-// Função do escritor
-void escritor() {
+void escritor(int bd, int buffer_fd) {
     	int item;
-   	produz_dados(&item);
+    	produz_dados(&item);
 
-   	 SEM_DOWN(bd); // Bloqueia o acesso ao buffer
-    	escreve_dados(item);
-    	SEM_UP(bd);   // Libera o acesso ao buffer
+    	SEM_DOWN(bd);
+    	escreve_dados(item, buffer_fd);
+    	SEM_UP(bd);
 }
 
-// Função principal
 int semaphore_test4() {
-	int mutex;
-	int empty;
-	int full; 
-	
+	pid_t pid;                  /* Process ID.              */
+    	int buffer_fd;              /* Buffer file descriptor.  */
+	int bd;                     /* Bd positions.            */
+	int mutex;                  /* Mutex.                   */
+	const int BUFFER_SIZE = 32; /* Buffer size.             */
+
     	/* Create semaphores. */
-	SEM_CREATE(mutex, 1);
-	SEM_CREATE(empty, 2);
-	SEM_CREATE(full, 3);
+    	SEM_CREATE(mutex, 1);
+    	SEM_CREATE(bd, 2);
 
-	/* Initialize semaphores. */
-	SEM_INIT(full, 0);
-	SEM_INIT(empty, BUFFER_SIZE);
-	SEM_INIT(mutex, 1);
-
-   	pid_t pid;
+    	/* Initialize semaphores. */
+    	SEM_INIT(bd, 1);
+    	SEM_INIT(mutex, 1);
 
     	buffer_fd = open("buffer", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
     	if (buffer_fd < 0)
@@ -606,17 +600,16 @@ int semaphore_test4() {
     	if ((pid = fork()) < 0) {
         	return -1;
     	} else if (pid == 0) {
-        	leitor();
-	        _exit(EXIT_SUCCESS);
+        	leitor(mutex, bd, buffer_fd);
+        _exit(EXIT_SUCCESS);
     	} else {
-        	escritor();
+        	escritor(bd, buffer_fd);
         	wait(NULL);
     	}
 
     	/* Destroy semaphores. */
-	SEM_DESTROY(mutex);
-	SEM_DESTROY(empty);
-	SEM_DESTROY(full);
+    	SEM_DESTROY(mutex);
+    	SEM_DESTROY(bd);
 
     	close(buffer_fd);
     	unlink("buffer");
