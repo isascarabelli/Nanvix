@@ -534,12 +534,50 @@ int semaphore_test3(void)
 	return (0);
 }
 
-int semaphore_test4(void){
-	pid_t pid;                  /* Process ID.              */
-	int buffer_fd;              /* Buffer file descriptor.  */
+void *reader(void *arg) {
+    	int i = 0;
 	int empty;                  /* Empty positions.         */
 	int full;                   /* Full positions.          */
 	int mutex;                  /* Mutex.                   */
+	const int NR_ITEMS = 512;   /* Number of items to send. */
+
+	
+   	while (i < NR_ITEMS) {
+        	SEM_DOWN(&empty);
+        	SEM_DOWN(&mutex);
+
+        	int item = GET_ITEM(buffer_fd, item);
+
+        	SEM_UP(&mutex);
+        	SEM_UP(&full);
+
+        	i++;
+    		}
+	}
+
+void *writer(void *arg) {
+	int i = 0;
+	int empty;                  /* Empty positions.         */
+	int full;                   /* Full positions.          */
+	int mutex;                  /* Mutex.                   */
+	const int NR_ITEMS = 512;   /* Number of items to send. */
+
+    	while (i < NR_ITEMS) {
+        	SEM_DOWN(&full);
+        	SEM_DOWN(&mutex);
+
+        	int item = i;
+        	PUT_ITEM(item);
+
+        	SEM_UP(&mutex);
+        	SEM_UP(&empty);
+
+        	i++;
+    		}
+	}
+
+int semaphore_test4(void){
+	pid_t pid;                  /* Process ID.              */
 	const int BUFFER_SIZE = 32; /* Buffer size.             */
 
 	/* Create buffer.*/
@@ -557,41 +595,14 @@ int semaphore_test4(void){
 	SEM_INIT(empty, BUFFER_SIZE);
 	SEM_INIT(mutex, 1);
 	
-	if ((pid = fork()) < 0)
-		return (-1);
-
-	/* Leitor */
-	else if (pid == 0) {
-		for (int i = 0; i < 10; i++) {
-			SEM_DOWN(empty);
-
-			SEM_DOWN(mutex);
-
-			int item;
-			GET_ITEM(buffer_fd, item);
-
-			SEM_UP(mutex);
-
-			SEM_UP(full);
-		}
-
-		_exit(EXIT_SUCCESS);
-	} else {
-		/* Escritor */
-		for (int i = 0; i < 10; i++) {
-			SEM_DOWN(full);
-
-			SEM_DOWN(mutex);
-
-			int item = i;
-			PUT_ITEM(buffer_fd, item);
-
-
-			SEM_UP(mutex);
-
-			SEM_UP(empty);
-		}
-	}
+	if ((pid = fork()) < 0) {
+        	return (-1);
+    		} else if (pid == 0) {
+        	reader();
+        	_exit(EXIT_SUCCESS);
+    		} else {
+        	writer();
+    		}
 
 	/* Destroy semaphores. */
 	SEM_DESTROY(mutex);
