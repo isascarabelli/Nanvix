@@ -276,7 +276,7 @@
 	/*
  	* Creates a semaphore or returns the key.
  	*/
-	EXTERN PUBLIC int sys_semget(unsigned key);
+	EXTERN PUBLIC int sys_semget(int key);
 
 	/*
  	* Allows 3 options in 'semid' semaphore depending on 'cmd' value.
