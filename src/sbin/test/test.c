@@ -534,58 +534,60 @@ int semaphore_test3(void)
 	return (0);
 }
 
-void *reader(void *arg) {
-    	int i = 0;
-	int empty;                  /* Empty positions.         */
-	int full;                   /* Full positions.          */
-	int mutex;                  /* Mutex.                   */
-	const int NR_ITEMS = 512;   /* Number of items to send. */
+// Problema dos leitores e Escitores
 
+void produz_dados() {
+    	srand((unsigned int)time(NULL));
+   	*item = rand() % 100;
+}
+
+void escreve_dados(int item) {
+	int item;
+    	PUT_ITEM(buffer_fd, item);
+}
+
+void ler_dados() {
+    	int item;
+    	GET_ITEM(buffer_fd, item);
+}
+
+// Função do leitor
+void leitor() {
 	
-   	while (i < NR_ITEMS) {
-        	SEM_DOWN(&empty);
-        	SEM_DOWN(&mutex);
+    	SEM_DOWN(mutex);
+    	leitores++;
+    	if (leitores == 1) {
+        	SEM_DOWN(bd); // Bloqueia o acesso ao buffer para o primeiro leitor
+    	}
+    	SEM_UP(mutex);
 
-        	int item = GET_ITEM(buffer_fd, item);
+    	ler_dados();
 
-        	SEM_UP(&mutex);
-        	SEM_UP(&full);
+    	SEM_DOWN(mutex);
+    	leitores--;
+    	if (leitores == 0) {
+        	SEM_UP(bd); // Libera o acesso ao buffer se não houver mais leitores
+    	}
+    	SEM_UP(mutex);
+}
 
-        	i++;
-    		}
-	}
+// Função do escritor
+void escritor() {
+    	int item;
+   	produz_dados(&item);
 
-void *writer(void *arg) {
-	int i = 0;
-	int empty;                  /* Empty positions.         */
-	int full;                   /* Full positions.          */
-	int mutex;                  /* Mutex.                   */
-	const int NR_ITEMS = 512;   /* Number of items to send. */
+   	 SEM_DOWN(bd); // Bloqueia o acesso ao buffer
+    	escreve_dados(item);
+    	SEM_UP(bd);   // Libera o acesso ao buffer
+}
 
-    	while (i < NR_ITEMS) {
-        	SEM_DOWN(&full);
-        	SEM_DOWN(&mutex);
-
-        	int item = i;
-        	PUT_ITEM(item);
-
-        	SEM_UP(&mutex);
-        	SEM_UP(&empty);
-
-        	i++;
-    		}
-	}
-
-int semaphore_test4(void){
-	pid_t pid;                  /* Process ID.              */
-	const int BUFFER_SIZE = 32; /* Buffer size.             */
-
-	/* Create buffer.*/
-	buffer_fd = open("buffer", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
-	if (buffer_fd < 0)
-		return (-1);
-
-	/* Create semaphores. */
+// Função principal
+int semaphore_test4() {
+	int mutex;
+	int empty;
+	int full; 
+	
+    	/* Create semaphores. */
 	SEM_CREATE(mutex, 1);
 	SEM_CREATE(empty, 2);
 	SEM_CREATE(full, 3);
@@ -594,27 +596,33 @@ int semaphore_test4(void){
 	SEM_INIT(full, 0);
 	SEM_INIT(empty, BUFFER_SIZE);
 	SEM_INIT(mutex, 1);
-	
-	if ((pid = fork()) < 0) {
-        	return (-1);
-    		} else if (pid == 0) {
-        	reader();
-        	_exit(EXIT_SUCCESS);
-    		} else {
-        	writer();
-    		}
 
-	/* Destroy semaphores. */
+   	pid_t pid;
+
+    	buffer_fd = open("buffer", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
+    	if (buffer_fd < 0)
+        	return -1;
+
+    	if ((pid = fork()) < 0) {
+        	return -1;
+    	} else if (pid == 0) {
+        	leitor();
+	        _exit(EXIT_SUCCESS);
+    	} else {
+        	escritor();
+        	wait(NULL);
+    	}
+
+    	/* Destroy semaphores. */
 	SEM_DESTROY(mutex);
 	SEM_DESTROY(empty);
 	SEM_DESTROY(full);
 
-	close(buffer_fd);
-	unlink("buffer");
+    	close(buffer_fd);
+    	unlink("buffer");
 
-	return (0);
+    	return 0;
 }
-
 /*============================================================================*
  *                                FPU test                                    *
  *============================================================================*/
