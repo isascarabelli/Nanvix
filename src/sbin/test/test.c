@@ -542,11 +542,11 @@ void produz_dados(int *item) {
 }
 
 void escreve_dados(int item, int buffer_fd) {
-    	PUT_ITEM(buffer_fd, item); // Substitua por chamada adequada
+    	PUT_ITEM(buffer_fd, item); 
 }
 
 void ler_dados(int *item, int buffer_fd) {
-    	GET_ITEM(buffer_fd, item); // Substitua por chamada adequada
+    	GET_ITEM(buffer_fd, item); 
 }
 
 void leitor(int mutex, int bd, int buffer_fd) {
