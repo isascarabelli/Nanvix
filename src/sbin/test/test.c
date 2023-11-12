@@ -583,7 +583,6 @@ int semaphore_test4() {
     	int buffer_fd;              /* Buffer file descriptor.  */
 	int bd;                     /* Bd positions.            */
 	int mutex;                  /* Mutex.                   */
-	const int BUFFER_SIZE = 32; /* Buffer size.             */
 
     	/* Create semaphores. */
     	SEM_CREATE(mutex, 1);
