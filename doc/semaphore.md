@@ -145,58 +145,58 @@ A função `semaphore_test4`, implementada em src/sbin/test/test.c, implementa o
 7. **Métodos Leitor e Escritor:**
    - As funções `leitor` e `escritor`, utilizadas na implementação da função `semaphore_test4`, desempenham papéis específicos no contexto do problema dos leitores e escritores, facilitando a leitura e escrita no buffer compartilhado entre processos.
 
-	- Função `leitor`
+	Função `leitor`
 
-	- A função `leitor` representa o comportamento de um processo leitor no contexto do problema dos leitores e escritores.
+	A função `leitor` representa o comportamento de um processo leitor no contexto do problema dos leitores e escritores.
 
 	```c
 	void leitor(int mutex, int bd, int buffer_fd);
 	```
 
--- **Entradas:**
-  	- `mutex`: Semáforo de exclusão mútua.
-  	- `bd`: Semáforo de controle de escrita no buffer.
-  	- `buffer_fd`: Descritor de arquivo do buffer compartilhado.
+	**Entradas:**
+  		- `mutex`: Semáforo de exclusão mútua.
+  		- `bd`: Semáforo de controle de escrita no buffer.
+  		- `buffer_fd`: Descritor de arquivo do buffer compartilhado.
 
-- **Comportamento:**
-  1. Realiza a operação DOWN no semáforo `mutex` para obter exclusão mútua.
-  2. Incrementa o contador de leitores.
-  3. Se for o primeiro leitor, realiza a operação DOWN no semáforo `bd` para impedir escritas no buffer.
-  4. Libera o semáforo `mutex`.
-  5. Lê um item do buffer compartilhado.
-  6. Obtém novamente a exclusão mútua.
-  7. Decrementa o contador de leitores.
-  8. Se não houver mais leitores, realiza a operação UP no semáforo `bd` para permitir escritas no buffer.
-  9. Libera o semáforo `mutex`.
+	- **Comportamento:**
+  		1. Realiza a operação DOWN no semáforo `mutex` para obter exclusão mútua.
+  		2. Incrementa o contador de leitores.
+  		3. Se for o primeiro leitor, realiza a operação DOWN no semáforo `bd` para impedir escritas no buffer.
+  		4. Libera o semáforo `mutex`.
+  		5. Lê um item do buffer compartilhado.
+  		6. Obtém novamente a exclusão mútua.
+  		7. Decrementa o contador de leitores.
+  		8. Se não houver mais leitores, realiza a operação UP no semáforo `bd` para permitir escritas no buffer.
+  		9. Libera o semáforo `mutex`.
 
-### Função `escritor`
+	### Função `escritor`
 
-A função `escritor` representa o comportamento de um processo escritor no contexto do problema dos leitores e escritores.
+	A função `escritor` representa o comportamento de um processo escritor no contexto do problema dos leitores e escritores.
 
-```c
-void escritor(int bd, int buffer_fd);
-```
+	```c
+	void escritor(int bd, int buffer_fd);
+	```
 
-- **Entradas:**
-  - `bd`: Semáforo de controle de escrita no buffer.
-  - `buffer_fd`: Descritor de arquivo do buffer compartilhado.
+	- **Entradas:**
+  		- `bd`: Semáforo de controle de escrita no buffer.
+  		- `buffer_fd`: Descritor de arquivo do buffer compartilhado.
 
-- **Comportamento:**
-  1. Gera um novo item de dados.
-  2. Realiza a operação DOWN no semáforo `bd` para impedir leituras e escritas simultâneas no buffer.
-  3. Escreve o novo item no buffer compartilhado.
-  4. Libera o semáforo `bd` para permitir operações subsequentes.
+	- **Comportamento:**
+  		1. Gera um novo item de dados.
+  		2. Realiza a operação DOWN no semáforo `bd` para impedir leituras e escritas simultâneas no buffer.
+  		3. Escreve o novo item no buffer compartilhado.
+  		4. Libera o semáforo `bd` para permitir operações subsequentes.
 
-8. **Retorno de Sucesso:**
-   - A função retorna 0 em caso de execução bem-sucedida.
-   ```c
-   return 0;
-   ```
+	8. **Retorno de Sucesso:**
+   		- A função retorna 0 em caso de execução bem-sucedida.
+   		```c
+   		return 0;	
+   		```
 
-### Retorno
+	### Retorno
 
-- Retorna 0 em caso de execução bem-sucedida.
-- Retorna -1 em caso de erro.
+	- Retorna 0 em caso de execução bem-sucedida.
+	- Retorna -1 em caso de erro.
 
 
 ## Conclusão 
