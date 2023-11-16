@@ -188,12 +188,8 @@ A função `semaphore_test4`, implementada em src/sbin/test/test.c, implementa o
   		4. Libera o semáforo `bd` para permitir operações subsequentes.
 
 	8. **Retorno de Sucesso:**
-   		- A função retorna 0 em caso de execução bem-sucedida.
-   		```c
-   		return 0;	
-   		```
-
-   	- **Retorno:**
+   		- Retorna 0 em caso de execução bem-sucedida.
+		- Retorna -1 em caso de erro.
 
 	- Retorna 0 em caso de execução bem-sucedida.
 	- Retorna -1 em caso de erro.
