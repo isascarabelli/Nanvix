@@ -1,5 +1,6 @@
 # Chamadas de biblioteca no espaço de usuário 
-// Implementadas em ubin/nomedocomando/nomedocomando.c
+
+Chamadas de sistemas implementadas em ubin/nomedocomando/nomedocomando.c
 
 - Semget: chama semget (para passar para o espaço em kernel) e faz a verificação dos parâmetros: valor tem que estar na faixa de valores dos ids para semáforos que foram disponibilizados, entre 0 e SEM_MAX.
   
@@ -89,7 +90,7 @@ PUBLIC void up_sem(struct semaphore *sem, int semid){
 
 ## Função `semaphore_test4`
 
-A função `semaphore_test4`, implementada em src/sbin/test/test.c, implementa o problema de sincronização dos leitores e escritores usando semáforos para sincronização entre processos. Essa função é responsável por iniciar semáforos, criar um buffer compartilhado, e gerenciar dois processos: um leitor e um escritor. Os semáforos são usados para garantir a exclusividade na escrita e controlar o acesso ao buffer compartilhado.
+A função `semaphore_test4`, implementada em src/sbin/test/test.c, implementa o problema de sincronização dos leitores e escritores usando semáforos para sincronização entre processos. 
 
 ### Etapas e Funcionalidades
 
@@ -187,13 +188,9 @@ A função `semaphore_test4`, implementada em src/sbin/test/test.c, implementa o
   		3. Escreve o novo item no buffer compartilhado.
   		4. Libera o semáforo `bd` para permitir operações subsequentes.
 
-	8. **Retorno de Sucesso:**
+	8. **Retorno:**
    		- Retorna 0 em caso de execução bem-sucedida.
 		- Retorna -1 em caso de erro.
-
-	- Retorna 0 em caso de execução bem-sucedida.
-	- Retorna -1 em caso de erro.
-
 
 ## Conclusão 
 
