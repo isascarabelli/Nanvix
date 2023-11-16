@@ -21,6 +21,7 @@
 #ifndef _ASM_FILE_
 
 	#include <nanvix/const.h>
+	#include <nanvix/pm.h>
 
 	/**
 	 * @brief Comand values for semaphores.
@@ -29,6 +30,8 @@
 	#define GETVAL   0   				/**< Returns the current value of a semaphore.  */
 	#define SETVAL   1   				/**< Sets the value of a semaphore.     */
 	#define IPC_RMID 3   				/**< Destroys a semaphore.              */
+	#define LOCKED   0					/**< Lock a semaphore.              */
+	#define UNLOCKED 1					/**< Unlock a semaphore.              */
 	#define SEM_MAX  10  				/**< Set the max value for a semaphore. */
 	#define FIRST_SEM ((&semtab[0]))			/**< First semaphore. */
 	#define LAST_SEM ((&semtab[SEM_MAX - 1]))	/**< Last semaphore. */
@@ -42,9 +45,12 @@
 	/* Struct that keeps semaphore information */
 	struct semaphore
 	{
-		int id;		/**< Semaphore ID. */
+		int id;			/**< Semaphore ID. */
 		int val;		/**< Top value of semaphore. */
 		int curr_val;	/**< Current value of semaphore. */
+		int flag;		/**< Set a state for semaphore. */
+
+		struct process *chain;
 
 	};
 
