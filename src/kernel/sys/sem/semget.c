@@ -42,6 +42,7 @@ PUBLIC int sys_semget(int key){
     semtab[key].id = key;          /**< Creating semaphore. */
     semtab[key].val = SETVAL;      /**< Set semaphore with max value (mutex). */
     semtab[key].curr_val = SETVAL; /**< Semaphore with current value 1 (mutex). */
+    semtab[key].flag = UNLOCKED;   /**< Semaphore with initial state unlocked. */
     return key;
 
 }
