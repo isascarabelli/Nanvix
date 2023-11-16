@@ -193,7 +193,7 @@ A função `semaphore_test4`, implementada em src/sbin/test/test.c, implementa o
    		return 0;	
    		```
 
-	### Retorno
+   	- **Retorno:**
 
 	- Retorna 0 em caso de execução bem-sucedida.
 	- Retorna -1 em caso de erro.
