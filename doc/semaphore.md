@@ -142,21 +142,21 @@ A função `semaphore_test4`, implementada em src/sbin/test/test.c, implementa o
    unlink("buffer");
    ```
 
-6. **Métodos Leitor e Escritor:**
+7. **Métodos Leitor e Escritor:**
    - As funções `leitor` e `escritor`, utilizadas na implementação da função `semaphore_test4`, desempenham papéis específicos no contexto do problema dos leitores e escritores, facilitando a leitura e escrita no buffer compartilhado entre processos.
 
-***Função `leitor`***
+	- Função `leitor`
 
-***A função `leitor` representa o comportamento de um processo leitor no contexto do problema dos leitores e escritores.***
+	- A função `leitor` representa o comportamento de um processo leitor no contexto do problema dos leitores e escritores.
 
-```c
-void leitor(int mutex, int bd, int buffer_fd);
-```
+	```c
+	void leitor(int mutex, int bd, int buffer_fd);
+	```
 
-- **Entradas:**
-  - `mutex`: Semáforo de exclusão mútua.
-  - `bd`: Semáforo de controle de escrita no buffer.
-  - `buffer_fd`: Descritor de arquivo do buffer compartilhado.
+-- **Entradas:**
+  	- `mutex`: Semáforo de exclusão mútua.
+  	- `bd`: Semáforo de controle de escrita no buffer.
+  	- `buffer_fd`: Descritor de arquivo do buffer compartilhado.
 
 - **Comportamento:**
   1. Realiza a operação DOWN no semáforo `mutex` para obter exclusão mútua.
