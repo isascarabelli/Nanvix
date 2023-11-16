@@ -142,8 +142,7 @@ A função `semaphore_test4`, implementada em src/sbin/test/test.c, implementa o
    unlink("buffer");
    ```
 
-7. **Leitor e Escritor
-
+6. **Métodos Leitor e Escritor:**
 As funções `leitor` e `escritor`, utilizadas na implementação da função `semaphore_test4`, desempenham papéis específicos no contexto do problema dos leitores e escritores, facilitando a leitura e escrita no buffer compartilhado entre processos.
 
 ### Função `leitor`
