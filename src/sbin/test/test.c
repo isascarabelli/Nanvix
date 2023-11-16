@@ -537,7 +537,7 @@ int semaphore_test3(void)
 // Problema dos leitores e Escitores
 
 void produz_dados(int *item) {
-    	srand((unsigned int)time(NULL));
+    	srand((unsigned int)getpid());
     	*item = rand() % 100;
 }
 
@@ -550,6 +550,7 @@ void ler_dados(int *item, int buffer_fd) {
 }
 
 void leitor(int mutex, int bd, int buffer_fd) {
+	int leitores = 0;
 	
     	SEM_DOWN(mutex);
     	leitores++;
