@@ -87,90 +87,118 @@ PUBLIC void up_sem(struct semaphore *sem, int semid){
 }
 ```
 
-## Função para Leitores e Escritores da `semaphore_test4`
+## Função `semaphore_test4`
 
-A função `semaphore_test4`, implementada em src/sbin/test/test.c demonstra um cenário simples de comunicação entre processos usando semáforos. Ela cria um buffer e dois processos: um leitor e um escritor. Os processos se comunicam lendo e escrevendo itens inteiros no buffer. Semáforos são utilizados para controlar o acesso ao buffer compartilhado e sincronizar as operações entre os processos.
+A função `semaphore_test4`, implementada em src/sbin/test/test.c, implementa o problema de sincronização dos leitores e escritores usando semáforos para sincronização entre processos. Essa função é responsável por iniciar semáforos, criar um buffer compartilhado, e gerenciar dois processos: um leitor e um escritor. Os semáforos são usados para garantir a exclusividade na escrita e controlar o acesso ao buffer compartilhado.
+
+### Etapas e Funcionalidades
+
+1. **Criação de Semáforos:**
+   - `mutex` e `bd` são criados para garantir a exclusão mútua e controlar a escrita no buffer, respectivamente.
+   ```c
+   SEM_CREATE(mutex, 1);
+   SEM_CREATE(bd, 2);
+   ```
+
+2. **Inicialização de Semáforos:**
+   - `bd` é inicializado com 1 para permitir a escrita inicial no buffer.
+   - `mutex` é inicializado com 1 para garantir a exclusão mútua.
+   ```c
+   SEM_INIT(bd, 1);
+   SEM_INIT(mutex, 1);
+   ```
+
+3. **Criação do Buffer Compartilhado:**
+   - O arquivo "buffer" é criado ou aberto para leitura e escrita.
+   ```c
+   buffer_fd = open("buffer", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
+   ```
+
+4. **Criação do Processo Filho (Leitor):**
+   - Utilizando `fork`, um novo processo (leitor) é criado.
+   - O processo filho executa a função `leitor`.
+   ```c
+   if ((pid = fork()) < 0)
+       return -1;
+   else if (pid == 0)
+       leitor(mutex, bd, buffer_fd);
+   ```
+
+5. **Processo Pai (Escritor):**
+   - O processo pai (escritor) executa a função `escritor` e aguarda a conclusão do processo filho.
+   ```c
+   else {
+       escritor(bd, buffer_fd);
+       wait(NULL);
+   }
+   ```
+
+6. **Destruição de Semáforos e Limpeza:**
+   - Ao final, os semáforos são destruídos e o arquivo de buffer é fechado e removido.
+   ```c
+   SEM_DESTROY(mutex);
+   SEM_DESTROY(bd);
+   close(buffer_fd);
+   unlink("buffer");
+   ```
+
+7. **Leitor e Escritor
+
+As funções `leitor` e `escritor`, utilizadas na implementação da função `semaphore_test4`, desempenham papéis específicos no contexto do problema dos leitores e escritores, facilitando a leitura e escrita no buffer compartilhado entre processos.
+
+### Função `leitor`
+
+A função `leitor` representa o comportamento de um processo leitor no contexto do problema dos leitores e escritores.
+
+```c
+void leitor(int mutex, int bd, int buffer_fd);
+```
+
+- **Entradas:**
+  - `mutex`: Semáforo de exclusão mútua.
+  - `bd`: Semáforo de controle de escrita no buffer.
+  - `buffer_fd`: Descritor de arquivo do buffer compartilhado.
+
+- **Comportamento:**
+  1. Realiza a operação DOWN no semáforo `mutex` para obter exclusão mútua.
+  2. Incrementa o contador de leitores.
+  3. Se for o primeiro leitor, realiza a operação DOWN no semáforo `bd` para impedir escritas no buffer.
+  4. Libera o semáforo `mutex`.
+  5. Lê um item do buffer compartilhado.
+  6. Obtém novamente a exclusão mútua.
+  7. Decrementa o contador de leitores.
+  8. Se não houver mais leitores, realiza a operação UP no semáforo `bd` para permitir escritas no buffer.
+  9. Libera o semáforo `mutex`.
+
+### Função `escritor`
+
+A função `escritor` representa o comportamento de um processo escritor no contexto do problema dos leitores e escritores.
+
+```c
+void escritor(int bd, int buffer_fd);
+```
+
+- **Entradas:**
+  - `bd`: Semáforo de controle de escrita no buffer.
+  - `buffer_fd`: Descritor de arquivo do buffer compartilhado.
+
+- **Comportamento:**
+  1. Gera um novo item de dados.
+  2. Realiza a operação DOWN no semáforo `bd` para impedir leituras e escritas simultâneas no buffer.
+  3. Escreve o novo item no buffer compartilhado.
+  4. Libera o semáforo `bd` para permitir operações subsequentes.
+
+8. **Retorno de Sucesso:**
+   - A função retorna 0 em caso de execução bem-sucedida.
+   ```c
+   return 0;
+   ```
 
 ### Retorno
 
 - Retorna 0 em caso de execução bem-sucedida.
 - Retorna -1 em caso de erro.
 
-### Debugger
-
-1. **Criar Arquivo de Buffer:**
-   - Abrir ou criar um arquivo chamado "buffer" com permissões de leitura e escrita.
-   - Retornar -1 em caso de erro.
-
-```c
-buffer_fd = open("buffer", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
-if (buffer_fd < 0)
-    return (-1);
-```
-
-2. **Criar Semáforos:**
-   - Criar três semáforos: `mutex`, `empty`, e `full`.
-
-```c
-SEM_CREATE(mutex, 1);
-SEM_CREATE(empty, 2);
-SEM_CREATE(full, 3);
-```
-
-3. **Inicializar Semáforos:**
-   - Inicializar os semáforos: `full` é configurado para 0, `empty` é configurado para o tamanho do buffer, e `mutex` é configurado para 1.
-
-```c
-SEM_INIT(full, 0);
-SEM_INIT(empty, BUFFER_SIZE);
-SEM_INIT(mutex, 1);
-```
-
-4. **Criar Processo Filho:**
-   - Criar um processo filho usando `fork`.
-   - Retornar -1 em caso de erro.
-
-```c
-if ((pid = fork()) < 0)
-    return (-1);
-```
-
-5. **Processos Leitor e Escritor:**
-   - O processo pai representa o escritor, e o processo filho representa o leitor.
-   - O leitor lê do buffer, e o escritor escreve no buffer.
-   - Semáforos são usados para controlar o acesso ao buffer e sincronizar as operações.
-
-```c
-if (pid == 0) {
-    //  Leitor
-} else {
-    //  Escritor
-}
-```
-
-6. **Destruir Semáforos:**
-   - Destruir os semáforos criados.
-
-```c
-SEM_DESTROY(mutex);
-SEM_DESTROY(empty);
-SEM_DESTROY(full);
-```
-
-7. **Fechar e Limpar:**
-   - Fechar o arquivo de buffer e removê-lo.
-
-```c
-close(buffer_fd);
-unlink("buffer");
-```
-
-8. **Retornar Sucesso:**
-   - Retornar 0 para indicar execução bem-sucedida.
-
-```c
-return (0);
-```
 
 ## Conclusão 
 
