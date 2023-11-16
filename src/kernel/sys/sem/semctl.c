@@ -38,8 +38,14 @@ PUBLIC int sys_semctl(int semid, int cmd, int val){
                 return sem->curr_val;       //Return current value.
             if (cmd == SETVAL)
                 semtab[semid].val = val;     //Set max value of semaphore.
-            if (cmd == IPC_RMID){
+            if (cmd == IPC_RMID && sem->flag == UNLOCKED){
                 semtab[semid].id = -1;       //Delete semaphore id.
+            } else {
+                wakeup(curr_proc->chain);
+                semtab[semid].flag = UNLOCKED;
+                semtab[semid].id = -1;
+                semtab[semid].val = 1;
+                semtab[semid].curr_val = 1;
             }
         }
     }
