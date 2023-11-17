@@ -42,12 +42,13 @@ PUBLIC void down_sem(struct semaphore *sem, int semid){
 //Current value increment and sleeping process
 PUBLIC void up_sem(struct semaphore *sem, int semid){
 
-    if (sem->curr_val == 0 && sem->curr_val < sem->val){
+    if (sem->flag == LOCKED){
         wakeup(curr_proc->chain);
         semtab[semid].flag = UNLOCKED;
         semtab[semid].curr_val++;
-    } else if (sem->curr_val > 0 && sem->curr_val < sem->val)
+    } else if (sem->curr_val > 0 && sem->curr_val < sem->val){
         semtab[semid].curr_val++;
+    }
 
 }
 
