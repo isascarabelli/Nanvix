@@ -18,13 +18,16 @@ A estrutura do semáforo está presente no arquivo `sem.h`, que é responsável 
 ```c
 struct semaphore
 	{
-		int id;		/**< Semaphore ID. */
-		unsigned val;		/**< Top value of semaphore. */
-		unsigned curr_val;	/**< Current value of semaphore. */
+		int id;			/**< Semaphore ID. */
+		int val;		/**< Top value of semaphore. */
+		int curr_val;		/**< Current value of semaphore. */
+		int flag;		/**< Set a state for semaphore. */
 
 	};
 ```
 Nesse mesmo arquivo, foi criado a tabela de semáforos, que mantém todos os semáforos e é definida por uma valor máximo de semáforos, nesse trabalho definido como 10, mas sendo esse valor alternado em `SEM_MAX`.
+
+A variável `flag` é responsavel por salvar se o estado atual do semáforo é bloqueado ou desbloqueado, definido como `LOCKED` e `UNLOCKED`.
 
 Além disso, foi também criado um arquivo `sem.c` que apenas constroi essa tabela de páginas.
 
@@ -61,29 +64,33 @@ Caso `cmd == IPC_RMID`, o semáforo é deletado atribuindo seu id como `-1` e ca
 
 A chamada de sistema `semop.c` executa as operações de incremento e decremento do semáforo, realizadas pelas funções `up_sem()` e `down_sem()`.
 
-A função `up_sem()` decrementa o semáforo se ele for maior que 0. Se não for, o processo atual deverá ser posto para dormir, pois tentou decrementar um semáforo zerado. Ao acordar, o processo terá a prioridade definida por `PRIO_USER`.
+A função `up_sem()` decrementa o semáforo se ele for maior que 0. Se não for, o processo atual deverá ser posto para dormir e o semáforo bloqueado, pois houve uma tentativa de decrementar um semáforo zerado. Ao acordar, o processo terá a prioridade definida por `PRIO_USER`.
 
 ```c
 PUBLIC void down_sem(struct semaphore *sem, int semid){
 
     if (sem->curr_val > 0)
         semtab[semid].curr_val--;
-    else
+    else {
         sleep(curr_proc->chain, PRIO_USER);
+        semtab[semid].flag = LOCKED;
+    }
 
 }
 ```
 
-A função `down_sem()` incrementa o semáforo apenas se o valor atual for menor que o valor máximo do semáforo. Também acorda o processo atual caso o valor atual do semáforo seja 0.
+A função `down_sem()` incrementa o semáforo apenas se o valor atual for menor que o valor máximo do semáforo. Também acorda o processo atual caso o estado atual do semáforo seja `LOCKED`.
 
 ```c
 PUBLIC void up_sem(struct semaphore *sem, int semid){
 
-    if (sem->curr_val == 0 && sem->curr_val < sem->val){
+    if (sem->flag == LOCKED){
         wakeup(curr_proc->chain);
+        semtab[semid].flag = UNLOCKED;
         semtab[semid].curr_val++;
-    } else if (sem->curr_val > 0 && sem->curr_val < sem->val)
+    } else if (sem->curr_val > 0 && sem->curr_val < sem->val){
         semtab[semid].curr_val++;
+    }
 
 }
 ```
