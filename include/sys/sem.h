@@ -50,8 +50,6 @@
 		int curr_val;	/**< Current value of semaphore. */
 		int flag;		/**< Set a state for semaphore. */
 
-		struct process *chain;
-
 	};
 
 	/* Forward definitions. */
