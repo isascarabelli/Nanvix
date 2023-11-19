@@ -8,6 +8,8 @@ Chamadas de sistemas implementadas em ubin/nomedocomando/nomedocomando.c
   
 - Semop: chama semop (para passar para o espaço em kernel) e faz a verificação dos parâmetros: semid tem que estar na faixa de valores dos semáforos, e op pode ser qualquer valor positivo ou negativo, diferente de 0.
 
+  ![image](https://github.com/isascarabelli/Nanvix/assets/73960096/16bdcd1e-47b1-467d-8742-3dfa8b669199)
+
   ![Captura de tela 2023-11-19 144711](https://github.com/isascarabelli/Nanvix/assets/73960096/f0fc0a9c-354b-462d-8dfa-58da1ffc07dd)
   
 - Semctl: chama semctl (para passar para o espaço em kernel) e faz a verificação dos parâmetros: semid tem que estar na faixa de valores dos semáforos; cmd precisa ser 0, 1 ou 3; val pode ser qualquer valor maior que 0.
