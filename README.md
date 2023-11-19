@@ -19,3 +19,12 @@ Resultado da implementação após testes de perfomance do algoritmo padrão imp
 
 ![WhatsApp Image 2023-10-07 at 11 32 45](https://github.com/isascarabelli/Nanvix/assets/73960096/829f4542-f41e-4954-a499-1ab29a2c719d)
 
+Em terceiro, implementamos um semáforo no Nanvix juntamente com o programa dos leitores e escritores para testar o seu funcionamento. A estrutura de semáforo conta com 3 chamadas de sistemas: 
+- semget: cria um semáforo e caso ele exista, apenas retorna seu id.
+- semop: faz o up ou down no semáforo, dependendo do valor que recebe (positivo - up, negativo - down)
+- semctl: pode realizar 3 operações:
+      * op = 0 --> retorna valor atual do semáforo;
+      * op = 1 --> seta um valor máximo para o semáforo
+      * op = 3 --> destrói um semáforo
+  
+![WhatsApp Image 2023-11-19 at 15 49 28](https://github.com/isascarabelli/Nanvix/assets/73960096/1cc8f04d-d629-44e8-8791-31f256a29847)
