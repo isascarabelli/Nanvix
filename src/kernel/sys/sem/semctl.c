@@ -40,13 +40,10 @@ PUBLIC int sys_semctl(int semid, int cmd, int val){
                 semtab[semid].val = val;     //Set max value of semaphore.
             if (cmd == IPC_RMID && sem->flag == UNLOCKED){
                 semtab[semid].id = -1;       //Delete semaphore id.
-                semtab[semid].flag = UNLOCKED;
-                semtab[semid].val = 1;
-                semtab[semid].curr_val = 1;
             } else {
                 wakeup(curr_proc->chain);
-                semtab[semid].id = -1;
                 semtab[semid].flag = UNLOCKED;
+                semtab[semid].id = -1;
                 semtab[semid].val = 1;
                 semtab[semid].curr_val = 1;
             }
