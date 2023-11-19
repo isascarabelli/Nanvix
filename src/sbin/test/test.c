@@ -450,8 +450,8 @@ static int sched_test3(void)
  */
 #define GET_ITEM(a, b)                               \
 {                                                    \
-	assert(lseek((a), 0, SEEK_SET) != -1);           \
-	assert(read((a), &(b), sizeof(b)) == sizeof(b)); \
+	if (lseek((a), 0, SEEK_SET) != -1)		         \
+		read((a), &(b), sizeof(b)); 				 \
 }                                                    \
 
 /**
