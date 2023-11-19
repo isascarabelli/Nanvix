@@ -115,20 +115,20 @@ static void getargs(int argc, char *const argv[])
 	
             /* Get val */
             else if (val == -1){
-				val = aux;
+		val = aux;
 
                 if (val < 0){
                     fprintf(stderr, "semctl: Please choose a positive number\n");
                     exit(EXIT_FAILURE);
                 }
-			}
+	}
 			/* Too many arguments. */
-			else {
-				fprintf(stderr, "semctl: too many arguments\n");
-				usage(EXIT_FAILURE);
-			}
+		else {
+			fprintf(stderr, "semctl: too many arguments\n");
+			usage(EXIT_FAILURE);
 		}
 	}
+}
 
 	/* Missing arguments. */
 	if ((semid == -1) || (cmd == -1) || (val == -1)) {
