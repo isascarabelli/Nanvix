@@ -95,7 +95,7 @@ A função `down_sem()` incrementa o semáforo apenas se o valor atual for menor
 ```c
 PUBLIC void up_sem(struct semaphore *sem, int semid){
 
-    if (sem->flag == LOCKED){
+    if (sem->curr_val == 0){
         wakeup(&sem->chain);
         semtab[semid].flag = UNLOCKED;
         semtab[semid].curr_val++;
