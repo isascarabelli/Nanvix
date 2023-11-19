@@ -32,6 +32,8 @@ struct semaphore
 		int curr_val;		/**< Current value of semaphore. */
 		int flag;		/**< Set a state for semaphore. */
 
+		struct process *chain;
+
 	};
 ```
 Nesse mesmo arquivo, foi criado a tabela de semáforos, que mantém todos os semáforos e é definida por uma valor máximo de semáforos, nesse trabalho definido como 10, mas sendo esse valor alternado em `SEM_MAX`.
@@ -82,7 +84,7 @@ PUBLIC void down_sem(struct semaphore *sem, int semid){
         semtab[semid].curr_val--;
     while (sem->curr_val == 0) {
         semtab[semid].flag = LOCKED;
-        sleep(curr_proc->chain, PRIO_USER);
+        sleep(&sem->chain, PRIO_USER);
     }
 
 }
@@ -94,7 +96,7 @@ A função `down_sem()` incrementa o semáforo apenas se o valor atual for menor
 PUBLIC void up_sem(struct semaphore *sem, int semid){
 
     if (sem->flag == LOCKED){
-        wakeup(curr_proc->chain);
+        wakeup(&sem->chain);
         semtab[semid].flag = UNLOCKED;
         semtab[semid].curr_val++;
     } else if (sem->curr_val > 0 && sem->curr_val < sem->val)
