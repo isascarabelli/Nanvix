@@ -12,9 +12,9 @@ Chamadas de sistemas implementadas em ubin/nomedocomando/nomedocomando.c
   
 - Semctl: chama semctl (para passar para o espaço em kernel) e faz a verificação dos parâmetros: semid tem que estar na faixa de valores dos semáforos; cmd precisa ser 0, 1 ou 3; val pode ser qualquer valor maior que 0.
 
-![Captura de tela 2023-11-19 145646](https://github.com/isascarabelli/Nanvix/assets/73960096/b1b7a2ee-99bc-470b-831d-0dc1b44c6109)
-![Captura de tela 2023-11-19 145531](https://github.com/isascarabelli/Nanvix/assets/73960096/e9095a7b-0ab8-44d0-a209-b57d1460bd98)
-![Captura de tela 2023-11-19 145507](https://github.com/isascarabelli/Nanvix/assets/73960096/f15ea98d-51f3-4457-9421-982e03754c0f)
+  ![Captura de tela 2023-11-19 145646](https://github.com/isascarabelli/Nanvix/assets/73960096/b1b7a2ee-99bc-470b-831d-0dc1b44c6109)
+  ![Captura de tela 2023-11-19 145531](https://github.com/isascarabelli/Nanvix/assets/73960096/e9095a7b-0ab8-44d0-a209-b57d1460bd98)
+  ![Captura de tela 2023-11-19 145507](https://github.com/isascarabelli/Nanvix/assets/73960096/f15ea98d-51f3-4457-9421-982e03754c0f)
 
 
 ## Chamadas de sistema da implementação do semáforo
