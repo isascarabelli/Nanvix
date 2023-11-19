@@ -47,8 +47,10 @@
 	{
 		int id;			/**< Semaphore ID. */
 		int val;		/**< Top value of semaphore. */
-		int curr_val;	/**< Current value of semaphore. */
+		int curr_val;		/**< Current value of semaphore. */
 		int flag;		/**< Set a state for semaphore. */
+
+		struct process *chain;
 
 	};
 
