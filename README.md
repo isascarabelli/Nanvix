@@ -23,6 +23,7 @@ Em terceiro, implementamos um semáforo no Nanvix juntamente com o programa dos 
 - semget: cria um semáforo e caso ele exista, apenas retorna seu id.
 - semop: faz o up ou down no semáforo, dependendo do valor que recebe (positivo - up, negativo - down)
 - semctl: pode realizar 3 operações:
+  
       * op = 0 --> retorna valor atual do semáforo;
       * op = 1 --> seta um valor máximo para o semáforo
       * op = 3 --> destrói um semáforo
