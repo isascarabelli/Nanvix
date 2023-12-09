@@ -66,7 +66,6 @@ struct pte
     unsigned zero : 1;       /* Demand zero?                   */
     unsigned fill : 1;       /* Demand fill?                   */
     unsigned frame : 20;     /* Frame number.                  */
-    unsigned referenced : 1; /* Referenced in 8 acess?         */
 };
 
 /*
