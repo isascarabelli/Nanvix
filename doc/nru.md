@@ -6,13 +6,13 @@ Para a limpeza do bit de referência, foi definido o período de 8 acessos e con
 
 ```c
 for (proc = FIRST_PROC; proc <= LAST_PROC; proc++){
-			for (j = 0; j < NR_FRAMES; j++){
+	for (j = 0; j < NR_FRAMES; j++){
 
-				if (proc->pid == frames[j].owner){
-					pg = getpte(proc, frames[j].addr);
-					pg->accessed = 0;
-				}
-
-			}
+		if (proc->pid == frames[j].owner){
+			pg = getpte(proc, frames[j].addr);
+			pg->accessed = 0;
 		}
+
+	}
+}
 ````
