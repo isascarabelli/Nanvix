@@ -16,3 +16,32 @@ for (proc = FIRST_PROC; proc <= LAST_PROC; proc++){
 	}
 }
 ````
+
+### Aging
+
+O conceito de *aging* (envelhecimento) neste código realiza estratégia de atualização da "idade" de cada página presente na memória física. O código faz isso através do seguinte trecho:
+
+```c
+if (time == 8)
+{
+    for (proc = FIRST_PROC; proc <= LAST_PROC; proc++)
+    {
+        for (j = 0; j < NR_FRAMES; j++)
+        {
+            if (proc->pid == frames[j].owner)
+            {
+                pg = getpte(proc, frames[j].addr);
+                pg->accessed = 0;
+
+                // Incrementa a idade de todas as páginas
+                frames[j].age++;
+            }
+        }
+    }
+    time = 0;
+}
+else
+    time++;
+```
+
+A cada 8 chamadas da função `allocf` (controladas pela variável `time`), o código percorre todas as páginas presentes na memória física associadas aos processos, reseta o bit de acesso (`accessed`) de cada página e incrementa a "idade" (`age`) de todas as páginas. Essa estratégia é utilizada para simular uma política de envelhecimento, onde as páginas que não são acessadas frequentemente acabam sendo mais propensas a serem substituídas em comparação com aquelas que são acessadas frequentemente.
