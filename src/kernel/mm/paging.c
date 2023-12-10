@@ -301,7 +301,7 @@ PRIVATE int allocf(void)
     struct process *proc; /* Process information */
     struct pte *pg; /* Working page table entry. */
 
-    if (time == 8)
+    if (time == 40)
     {
         for (proc = FIRST_PROC; proc <= LAST_PROC; proc++)
         {
