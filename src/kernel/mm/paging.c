@@ -301,6 +301,7 @@ PRIVATE int allocf(void)
     struct process *proc; /* Process information */
     struct pte *pg; /* Working page table entry. */
 
+    //Cleaning accessed bit
     if (time == 40)
     {
         for (proc = FIRST_PROC; proc <= LAST_PROC; proc++)
